@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    dtos = Page::HomePage::TimelineDomain.new.execute(id: set_current_user.id)
+    dtos = Page::HomePage::TimelineDomain.new.execute
     render json: dtos.map(&:get).as_json
   end
 
