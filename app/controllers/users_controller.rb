@@ -1,15 +1,15 @@
 class UsersController < ApplicationController
   def show
     user = Page::ProfilePage::ShowUserWithProfileDomain.new(user_id: params[:id]).execute
-    render json: user.as_json(include: :profile)
+    render json: user.as_json(include: :profile, except: :password_digest).camelize
   end
 
   def create
     result = Common::Users::CreateUserDomain.new(params: user_params).execute
     if result.success?
-      render json: result.user, status: :created
+      render json: result.user.as_json.camelize, status: :created
     else
-      render json: { errors: result.errors }, status: :unprocessable_entity
+      render json: { errors: result.errors }.camelize, status: :unprocessable_entity
     end
   end
 
@@ -24,13 +24,13 @@ class UsersController < ApplicationController
   end
 
   def followers
-    users = Page::ProfilePage::ListUserFollowDomain.new(user_id: params[:id]).followers
-    render json: users
+    users = Page::ProfilePage::FollowersGetDomain.new(user_id: params[:id]).execute
+    render json: users.as_json.camelize
   end
 
   def following
-    users = Page::ProfilePage::ListUserFollowDomain.new(user_id: params[:id]).following
-    render json: users
+    users = Page::ProfilePage::FollowsGetDomain.new(user_id: params[:id]).execute
+    render json: users.as_json.camelize
   end
 
   private

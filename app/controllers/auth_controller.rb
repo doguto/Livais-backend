@@ -5,7 +5,7 @@ class AuthController < ApplicationController
     render json: {
       token: token,
       user: user.slice(:id, :name, :email, :image)
-    }
+    }.camelize
   rescue StandardError => e
     render json: { error: e.message }, status: :unauthorized
   end
@@ -16,7 +16,7 @@ class AuthController < ApplicationController
     render json: {
       token: token,
       user: user.slice(:id, :name, :email, :image)
-    }
+    }.camelize
   rescue StandardError => e
     render json: { error: e.message }, status: :unauthorized
   end
@@ -27,7 +27,7 @@ class AuthController < ApplicationController
     render json: {
       token: token,
       user: user.slice(:id, :name, :email, :image)
-    }
+    }.camelize
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
@@ -41,7 +41,7 @@ class AuthController < ApplicationController
 
   def me
     authenticate_user
-    render json: @current_user.slice(:id, :name, :email, :image)
+    render json: @current_user.slice(:id, :name, :email, :image).camelize
   end
 
   def logout

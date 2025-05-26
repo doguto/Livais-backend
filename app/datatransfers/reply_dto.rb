@@ -6,18 +6,18 @@ class ReplyDto
     @content = reply.content
     @created_at = reply.created_at
     @user = {
-      id: reply.user.id,
-      name: reply.user.name,
-      image: reply.user.image
+      "id" => reply.user.id,
+      "name" => reply.user.name,
+      "image" => reply.user.image
     }
   end
 
-  def as_json(*_args)
+  def get
     {
-      id: @id,
-      content: @content,
-      created_at: @created_at,
-      user: @user
-    }
+      "id" => @id,
+      "content" => @content,
+      "created_at" => @created_at,
+      "user" => @user
+    }.camelize
   end
 end

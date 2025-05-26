@@ -1,10 +1,10 @@
 class Posts::RepliesController < ApplicationController
   def create
-    post = Common::Posts::ReplyPostDomain.new(user_id: params[:user_id]).execute(
+    dto = Common::Posts::ReplyPostDomain.new(user_id: params[:user_id]).execute(
       content: params[:content],
       reply_to_id: params[:post_id]
     )
-    render json: ReplyDto.new(post), status: :created
+    render json: dto.get.to_camelized_json, status: :created
   rescue ActiveRecord::RecordNotFound
     render json: { error: "User or Post not found" }, status: :not_found
   rescue StandardError => e

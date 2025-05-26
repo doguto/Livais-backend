@@ -6,8 +6,8 @@ module Common::Posts
     end
 
     def execute
-      @user = User.find(@user_id)
-      Post.where(user: @user).order(created_at: :desc).map { |post| PostDto.new(post) }
+      user = User.find(@user_id)
+      Post.where(user: user).order(created_at: :desc).map { |post| PostDto.new(post) }
     end
   end
 end

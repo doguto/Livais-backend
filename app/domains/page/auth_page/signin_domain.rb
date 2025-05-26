@@ -8,7 +8,9 @@ module Page::AuthPage
 
     def execute
       user = User.find_by(email: @email)
+      Rails.logger.debug "Sign in"
       if user&.authenticate(@password)
+        Rails.logger.debug "OK"
         token = JsonWebToken.encode(user_id: user.id)
         [token, user]
       else
