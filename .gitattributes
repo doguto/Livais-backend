@@ -11,3 +11,4 @@ config/credentials.yml.enc diff=rails_credentials
 
 app/**/*.rb text=auto eol=lf
 config/**/*.rb text=auto eol=lf
+lib/**/*.rb text=auto eol=lf
