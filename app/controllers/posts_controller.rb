@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    post = Common::Posts::ShowPostDomain.new.execute(id: params[:id])
+    post = Common::Posts::ShowPostDomain.new.execute(post_id: params[:id])
     render json: post.get.as_json
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Post not found" }, status: :not_found
