@@ -34,14 +34,14 @@ class AuthController < ApplicationController
 
   def authenticate_user
     token = request.headers["Authorization"]&.split&.last
-    @current_user = Page::AuthPage::AuthenticateUserDomain.new(token).execute
+    Page::AuthPage::AuthenticateUserDomain.new.execute(token)
   rescue StandardError => e
     render json: { error: e.message }, status: :unauthorized
   end
 
   def me
     authenticate_user
-    render json: @current_user.slice(:id, :name, :email, :image).camelize
+    render json: Current.current_user.slice(:id, :name, :email, :image).camelize
   end
 
   def logout

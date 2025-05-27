@@ -6,14 +6,10 @@ class ApplicationController < ActionController::API
   def set_current_user
     header = request.headers["Authorization"]
     token = header.split.last if header
-    @current_user = Page::AuthPage::SetCurrentUserDomain.new(token).execute
-  rescue StandardError
-    @current_user = nil
+    Common::Auth::SetCurrentUserDomain.new.execute(token: token)
   end
 
-  attr_reader :current_user
-
   def authenticate_user!
-    render json: { error: "Not Authorized" }, status: :unauthorized unless current_user
+    render json: { error: "Not Authorized" }, status: :unauthorized unless Current.current_user
   end
 end

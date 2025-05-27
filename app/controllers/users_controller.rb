@@ -14,12 +14,12 @@ class UsersController < ApplicationController
   end
 
   def follow
-    Common::Users::FollowUserDomain.new(follower_id: current_user.id, followed_id: params[:id]).execute
+    Common::Users::FollowUserDomain.new.execute(followed_id: params[:id])
     head :no_content
   end
 
   def unfollow
-    Common::Users::UnfollowUserDomain.new(follower_id: current_user.id, followed_id: params[:id]).execute
+    Common::Users::UnfollowUserDomain.new.execute(followed_id: params[:id])
     head :no_content
   end
 
