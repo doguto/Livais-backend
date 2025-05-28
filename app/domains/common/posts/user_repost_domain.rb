@@ -1,6 +1,6 @@
 module Common::Posts
   class UserRepostDomain < ApplicationDomain
-    def execute(user_id:, post_id:)
+    def execute(post_id:, user_id: Current.current_user)
       repost = UserRepost.find_by(user_id: user_id, post_id: post_id)
       if repost
         repost.destroy

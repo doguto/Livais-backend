@@ -1,6 +1,6 @@
 class RepostController < ApplicationController
   def create
-    result = Common::Posts::UserRepostDomain.new.execute(user_id: @current_user.id, post_id: params[:post_id])
+    result = Common::Posts::UserRepostDomain.new.execute(post_id: params[:post_id])
     if result
       render json: { success: true }
     else
