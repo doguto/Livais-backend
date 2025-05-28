@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_22_124706) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_123616) do
+  create_table "ai_models", force: :cascade do |t|
+    t.string "model"
+    t.string "string"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ai_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "ai_model_id", null: false
+    t.index ["ai_model_id"], name: "index_ai_users_on_ai_model_id"
     t.index ["user_id"], name: "index_ai_users_on_user_id"
   end
 
@@ -73,6 +82,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_22_124706) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "ai_users", "ai_models"
   add_foreign_key "ai_users", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"

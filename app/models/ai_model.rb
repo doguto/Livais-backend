@@ -1,0 +1,2 @@
+class AiModel < ApplicationRecord
+end
