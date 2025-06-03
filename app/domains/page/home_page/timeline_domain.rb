@@ -13,13 +13,13 @@ module Page::HomePage
 
       dtos = []
       posts.each do |post|
-        is_following_user = if user 
+        is_following_user = if user
                               @follow_state_get_service.following_user?(user_id: user.id, opponent_id: post.user_id)
                             else
                               false
                             end
 
-        is_liked_by_current_user = if user 
+        is_liked_by_current_user = if user
                                      @like_state_get_service.liked_by_user?(user_id: user.id, post_id: post.id)
                                    else
                                      false

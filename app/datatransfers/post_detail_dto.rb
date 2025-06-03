@@ -24,7 +24,7 @@ class PostDetailDto
       "likes_count" => @post.likes.count,
       "reposts_count" => @post.reposts.count,
       "is_liked" => @is_liked_by_current_user,
-      "replies" => @replies,
+      "replies" => @replies
     }.camelize
   end
 end
