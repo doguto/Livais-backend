@@ -1,6 +1,6 @@
 class AuthController < ApplicationController
   def google
-    token, user = Page::AuthPage::AuthenticateGoogleDomain.new(params[:credential]).execute
+    token, user = Page::AuthPage::AuthenticateGoogleDomain.new(credential: params[:credential]).execute
     response.headers["Authorization"] = "Bearer #{token}"
     render json: {
       token: token,

@@ -1,11 +1,11 @@
 class PostsController < ApplicationController
   def index
-    dtos = Page::HomePage::TimelineDomain.new.execute
+    dtos = Page::HomePage::TimelineDomain.new.execute(current_user_id: Current.current_user&.id)
     render json: dtos.map(&:get).as_json
   end
 
   def show
-    post = Common::Posts::ShowPostDomain.new.execute(post_id: params[:id])
+    post = Common::Posts::ShowPostDomain.new.execute(post_id: params[:id], current_user_id: Current.current_user&.id)
     render json: post.get.as_json
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Post not found" }, status: :not_found

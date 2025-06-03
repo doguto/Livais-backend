@@ -1,9 +1,8 @@
 class PostDetailDto
-  def initialize(post:, current_user: nil, liked_by_current_user: false, is_following_user: true, replies: [])
+  def initialize(post:, is_liked_by_current_user: false, is_following_user: false, replies: [])
     @post = post
-    @current_user = current_user
     @is_following_user = is_following_user
-    @liked_by_current_user = liked_by_current_user
+    @is_liked_by_current_user = is_liked_by_current_user
     @replies = replies
   end
 
@@ -24,16 +23,8 @@ class PostDetailDto
       "replies_count" => @post.replies.count,
       "likes_count" => @post.likes.count,
       "reposts_count" => @post.reposts.count,
-      "liked" => @liked_by_current_user,
-      "replies" => @replies
+      "is_liked" => @is_liked_by_current_user,
+      "replies" => @replies,
     }.camelize
-  end
-
-  private
-
-  def following_user?
-    return false unless @current_user
-
-    @current_user.following.exists?(id: @post.user.id)
   end
 end
