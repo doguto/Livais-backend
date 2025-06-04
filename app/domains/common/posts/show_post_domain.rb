@@ -19,9 +19,6 @@ module Common::Posts
                                          Set.new
                                        end
 
-      all_user_ids_in_context = Set.new([post.user.id])
-      post.replies.each { |reply| all_user_ids_in_context.add(reply.user.id) }
-
       following_user_ids_by_current_user = if current_user
                                              current_user.following.pluck(:id).to_set
                                            else
