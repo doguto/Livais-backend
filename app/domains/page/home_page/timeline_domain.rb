@@ -18,13 +18,13 @@ module Page::HomePage
       posts.map do |post|
         is_following_user = following_user_ids.include?(post.user_id)
 
-        is_liked_by_current_user = if user_id.present?
+        is_liked = if user_id.present?
                                      post.likes.any? { |like| like.user_id == user_id }
                                    else
                                      false
                                    end
 
-        is_reposted_by_current_user = if user_id.present?
+        is_reposted = if user_id.present?
                                         post.reposts.any? { |repost| repost.user_id == user_id }
                                       else
                                         false
@@ -33,8 +33,8 @@ module Page::HomePage
         PostDto.new(
           post,
           is_following_user: is_following_user,
-          is_liked_by_current_user: is_liked_by_current_user,
-          is_reposted_by_current_user: is_reposted_by_current_user
+          is_liked: is_liked,
+          is_reposted: is_reposted
         )
       end
     end
