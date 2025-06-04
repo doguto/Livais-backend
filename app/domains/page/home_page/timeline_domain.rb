@@ -1,35 +1,31 @@
 module Page::HomePage
   class TimelineDomain < ApplicationDomain
-    def initialize
-      super
-      @follow_state_get_service = FollowStateGetService.new
-      @like_state_get_service = LikeStateGetService.new
-    end
+    def execute
+      user = Current.current_user
+      user_id = user&.id
 
-    def execute(current_user_id: nil)
-      user = current_user_id.present? ? User.find_by(id: current_user_id) : nil
+      posts = Post.order(created_at: :desc).limit(50).includes(
+        :user,
+        :likes
+      )
 
-      posts = Post.order(created_at: :desc).limit(50).includes(:user)
+      following_user_ids = if user
+                             user.following.pluck(:id).to_set
+                           else
+                             Set.new
+                           end
 
-      dtos = []
-      posts.each do |post|
-        is_following_user = if user
-                              @follow_state_get_service.following_user?(user_id: user.id, opponent_id: post.user_id)
-                            else
-                              false
-                            end
+      posts.map do |post|
+        is_following_user = following_user_ids.include?(post.user_id)
 
-        is_liked_by_current_user = if user
-                                     @like_state_get_service.liked_by_user?(user_id: user.id, post_id: post.id)
+        is_liked_by_current_user = if user_id.present?
+                                     post.likes.any? { |like| like.user_id == user_id }
                                    else
                                      false
                                    end
 
-        dto = PostDto.new(post, is_following_user: is_following_user, is_liked_by_current_user: is_liked_by_current_user)
-        dtos.push(dto)
+        PostDto.new(post, is_following_user: is_following_user, is_liked_by_current_user: is_liked_by_current_user)
       end
-
-      dtos
     end
   end
 end
