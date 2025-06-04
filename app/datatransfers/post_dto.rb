@@ -1,8 +1,8 @@
 class PostDto
-  def initialize(post, is_following_user: true, current_user_id: nil)
+  def initialize(post, is_following_user: false, is_liked_by_current_user: false)
     @post = post
-    @current_user = current_user_id
     @is_following_user = is_following_user
+    @is_liked_by_current_user = is_liked_by_current_user
   end
 
   def get
@@ -21,7 +21,8 @@ class PostDto
       }.camelize,
       "replies_count" => @post.replies.count,
       "likes_count" => @post.likes.count,
-      "reposts_count" => @post.reposts.count
+      "reposts_count" => @post.reposts.count,
+      "is_liked" => @is_liked_by_current_user
     }.camelize
   end
 end
