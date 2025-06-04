@@ -20,9 +20,9 @@ class PostDto
         "image" => @post.user.image,
         "is_following" => @is_following_user
       }.camelize,
-      "replies_count" => @post.replies.count,
-      "likes_count" => @post.likes.count,
-      "reposts_count" => @post.reposts.count,
+      "replies_count" => @post.replies_count,
+      "likes_count" => @post.likes_count,
+      "reposts_count" => @post.reposts_count,
       "is_liked" => @is_liked,
       "is_reposted" => @is_reposted
     }.camelize

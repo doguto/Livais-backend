@@ -14,22 +14,22 @@ module Common::Posts
       all_post_ids_in_context = [post.id] + post.replies.map(&:id)
 
       liked_post_ids = if current_user_id.present?
-                                         Like.where(user_id: current_user_id, post_id: all_post_ids_in_context).pluck(:post_id).to_set
-                                       else
-                                         Set.new
-                                       end
+                         Like.where(user_id: current_user_id, post_id: all_post_ids_in_context).pluck(:post_id).to_set
+                       else
+                         Set.new
+                       end
 
       reposted_posts_ids = if current_user_id.present?
-                                             Repost.where(user_id: current_user_id, post_id: all_post_ids_in_context).pluck(:post_id).to_set
-                                           else
-                                             Set.new
-                                           end
+                             Repost.where(user_id: current_user_id, post_id: all_post_ids_in_context).pluck(:post_id).to_set
+                           else
+                             Set.new
+                           end
 
       following_user_ids = if current_user
-                                             current_user.following.pluck(:id).to_set
-                                           else
-                                             Set.new
-                                           end
+                             current_user.following.pluck(:id).to_set
+                           else
+                             Set.new
+                           end
 
       is_liked = liked_post_ids.include?(post.id)
       is_following_user = following_user_ids.include?(post.user.id)

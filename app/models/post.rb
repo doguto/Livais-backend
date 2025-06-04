@@ -8,6 +8,6 @@ class Post < ApplicationRecord
   has_many :reposts, dependent: :destroy
   has_many :reposting_user, through: :reposts, source: :user
 
-  belongs_to :parent_post, class_name: "Post", foreign_key: "reply_to_id", optional: true, inverse_of: :replies
+  belongs_to :parent_post, class_name: "Post", foreign_key: "reply_to_id", optional: true, inverse_of: :replies, counter_cache: :replies_count
   has_many :replies, class_name: "Post", foreign_key: "reply_to_id", dependent: :destroy, inverse_of: :parent_post
 end
