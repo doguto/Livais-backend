@@ -24,7 +24,18 @@ module Page::HomePage
                                      false
                                    end
 
-        PostDto.new(post, is_following_user: is_following_user, is_liked_by_current_user: is_liked_by_current_user)
+        is_reposted_by_current_user = if user_id.present?
+                                        post.reposts.any? { |repost| repost.user_id == user_id }
+                                      else
+                                        false
+                                      end
+
+        PostDto.new(
+          post,
+          is_following_user: is_following_user,
+          is_liked_by_current_user: is_liked_by_current_user,
+          is_reposted_by_current_user: is_reposted_by_current_user
+        )
       end
     end
   end
