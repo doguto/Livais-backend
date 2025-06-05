@@ -20,7 +20,7 @@ module Page::HomePage
         is_following_user = following_user_ids.include?(post.user_id)
 
         is_liked = post.likes.any? 
-        is_reposted = post.reposts.any?
+        is_reposted = post.current_user_reposts.any?
 
         PostDto.new(
           post,
