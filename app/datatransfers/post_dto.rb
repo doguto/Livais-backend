@@ -27,4 +27,14 @@ class PostDto
       "is_reposted" => @is_reposted
     }.camelize
   end
+
+  def self.from_collection(posts, following_ids: Set.new)
+    posts.map do |post|
+      is_following_user = following_ids.include?(post.user_id)
+      is_liked = post.current_user_likes.any?
+      is_reposted = post.current_user_reposts.any?
+
+      new(post, is_following_user: is_following_user, is_liked: is_liked, is_reposted: is_reposted)
+    end
+  end
 end

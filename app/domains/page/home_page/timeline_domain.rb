@@ -1,33 +1,15 @@
 module Page::HomePage
   class TimelineDomain < ApplicationDomain
     def execute
-      user = Current.current_user
-
       posts = Post.order(created_at: :desc).limit(50).includes(
         :user,
         :current_user_likes,
         :current_user_reposts
       )
 
-      following_user_ids = if user
-                             user.following.pluck(:id).to_set
-                           else
-                             Set.new
-                           end
+      following_user_ids = following_ids_for
 
-      posts.map do |post|
-        is_following_user = following_user_ids.include?(post.user_id)
-
-        is_liked = post.current_user_likes.any?
-        is_reposted = post.current_user_reposts.any?
-
-        PostDto.new(
-          post,
-          is_following_user: is_following_user,
-          is_liked: is_liked,
-          is_reposted: is_reposted
-        )
-      end
+      PostDto.from_collection(posts, following_ids: following_user_ids)
     end
   end
 end
