@@ -2,7 +2,6 @@ module Page::HomePage
   class TimelineDomain < ApplicationDomain
     def execute
       user = Current.current_user
-      user_id = user&.id
 
       posts = Post.order(created_at: :desc).limit(50).includes(
         :user,
@@ -19,7 +18,7 @@ module Page::HomePage
       posts.map do |post|
         is_following_user = following_user_ids.include?(post.user_id)
 
-        is_liked = post.current_user_likes.any? 
+        is_liked = post.current_user_likes.any?
         is_reposted = post.current_user_reposts.any?
 
         PostDto.new(
