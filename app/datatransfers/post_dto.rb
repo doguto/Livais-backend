@@ -1,5 +1,5 @@
 class PostDto
-  def initialize(post, is_following_user: false, is_liked: false, is_reposted: false)
+  def initialize(post, is_following_user: false, is_liked: true, is_reposted: false)
     @post = post
     @is_following_user = is_following_user
     @is_liked = is_liked

@@ -6,8 +6,8 @@ module Page::HomePage
 
       posts = Post.order(created_at: :desc).limit(50).includes(
         :user,
-        :likes,
-        :reposts
+        :current_user_likes,
+        :current_user_reposts
       )
 
       following_user_ids = if user
@@ -19,17 +19,8 @@ module Page::HomePage
       posts.map do |post|
         is_following_user = following_user_ids.include?(post.user_id)
 
-        is_liked = if user_id.present?
-                     post.likes.any? { |like| like.user_id == user_id }
-                   else
-                     false
-                   end
-
-        is_reposted = if user_id.present?
-                        post.reposts.any? { |repost| repost.user_id == user_id }
-                      else
-                        false
-                      end
+        is_liked = post.likes.any? 
+        is_reposted = post.reposts.any?
 
         PostDto.new(
           post,

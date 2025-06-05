@@ -1,5 +1,5 @@
 class PostDetailDto
-  def initialize(post:, is_liked: false, is_following_user: false, is_reposted: false, replies: [])
+  def initialize(post:, is_liked: false, is_following_user: true, is_reposted: false, replies: [])
     @post = post
     @is_following_user = is_following_user
     @is_liked = is_liked
