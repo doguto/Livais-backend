@@ -19,7 +19,7 @@ module Page::HomePage
       posts.map do |post|
         is_following_user = following_user_ids.include?(post.user_id)
 
-        is_liked = post.likes.any? 
+        is_liked = post.current_user_likes.any? 
         is_reposted = post.current_user_reposts.any?
 
         PostDto.new(
