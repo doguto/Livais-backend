@@ -1,20 +1,21 @@
 class NoticeDto
-  def initialize(notice, user_id: nil, post_id: nil)
+  def initialize(notice, user: nil, post: nil)
     @notice = notice
-    @user_id = user_id
-    @post_id = post_id
+    @user = user
+    @post = post
   end
 
   def get
     {
       id: @notice.id,
-      user_id: @user_id,
-      post_id: @post_id,
+      user_id: @user&.id,
+      user_name: @user&.name,
+      post_id: @post&.id,
+      post_content: @post&.content,
       notifiable_type: @notice.notifiable_type,
       notifiable_id: @notice.notifiable_id,
       created_at: @notice.created_at,
-      updated_at: @notice.updated_at,
-      notifiable: @notice.notifiable.as_json(only: [:id, :content, :created_at]).camelize
+      updated_at: @notice.updated_at
     }.camelize
   end
 end
