@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_28_123616) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_04_164736) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -51,6 +51,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_123616) do
     t.string "content", limit: 280
     t.string "status", default: "published"
     t.integer "reply_to_id"
+    t.integer "likes_count", default: 0, null: false
+    t.integer "replies_count", default: 0, null: false
+    t.integer "reposts_count", default: 0, null: false
     t.index ["reply_to_id"], name: "index_posts_on_reply_to_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
