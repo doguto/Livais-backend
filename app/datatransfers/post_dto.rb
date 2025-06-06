@@ -1,8 +1,9 @@
 class PostDto
-  def initialize(post, is_following_user: true, current_user_id: nil)
+  def initialize(post, is_following_user: false, is_liked: true, is_reposted: false)
     @post = post
-    @current_user = current_user_id
     @is_following_user = is_following_user
+    @is_liked = is_liked
+    @is_reposted = is_reposted
   end
 
   def get
@@ -19,9 +20,21 @@ class PostDto
         "image" => @post.user.image,
         "is_following" => @is_following_user
       }.camelize,
-      "replies_count" => @post.replies.count,
-      "likes_count" => @post.likes.count,
-      "reposts_count" => @post.reposts.count
+      "replies_count" => @post.replies_count,
+      "likes_count" => @post.likes_count,
+      "reposts_count" => @post.reposts_count,
+      "is_liked" => @is_liked,
+      "is_reposted" => @is_reposted
     }.camelize
+  end
+
+  def self.from_collection(posts, following_ids: Set.new)
+    posts.map do |post|
+      is_following_user = following_ids.include?(post.user_id)
+      is_liked = post.current_user_likes.any?
+      is_reposted = post.current_user_reposts.any?
+
+      new(post, is_following_user: is_following_user, is_liked: is_liked, is_reposted: is_reposted)
+    end
   end
 end

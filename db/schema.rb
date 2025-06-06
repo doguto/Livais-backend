@@ -61,6 +61,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_044539) do
     t.string "content", limit: 280
     t.string "status", default: "published"
     t.integer "reply_to_id"
+    t.integer "likes_count", default: 0, null: false
+    t.integer "replies_count", default: 0, null: false
+    t.integer "reposts_count", default: 0, null: false
     t.index ["reply_to_id"], name: "index_posts_on_reply_to_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end

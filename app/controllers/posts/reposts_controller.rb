@@ -1,4 +1,4 @@
-class RepostController < ApplicationController
+class Posts::RepostsController < ApplicationController
   def create
     result = Common::Posts::UserRepostDomain.new.execute(post_id: params[:post_id])
     if result
