@@ -86,5 +86,15 @@ while repost_set.size < NUM_REPOSTS && attempts < max_attempts
   repost_set << [user.id, post.id]
 end
 
+count = 1
+10.times do
+  Notice.create!(
+    user_id: 91,
+    notifiable_type: "Follow",
+    notifiable_id: count
+  )
+  count += 1  
+end
+
 
 puts "✅ Done!"
