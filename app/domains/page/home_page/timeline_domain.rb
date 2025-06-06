@@ -7,7 +7,9 @@ module Page::HomePage
         :current_user_reposts
       )
 
-      following_user_ids = following_ids_for
+      current_user = Current.current_user
+
+      following_user_ids = current_user ? current_user.following_ids_as_set : Set.new
 
       PostDto.from_collection(posts, following_ids: following_user_ids)
     end

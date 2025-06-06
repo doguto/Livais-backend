@@ -12,7 +12,8 @@ module Common::Posts
         ] }
       ).find(post_id)
 
-      following_user_ids = following_ids_for
+      current_user = Current.current_user
+      following_user_ids = current_user ? current_user.following_ids_as_set : Set.new
 
       is_liked = post.current_user_likes.any?
       is_reposted = post.current_user_reposts.any?

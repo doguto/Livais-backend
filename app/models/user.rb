@@ -28,6 +28,10 @@ class User < ApplicationRecord
 
   validates :password, presence: true, if: :password_required?
 
+  def following_ids_as_set
+    following.pluck(:id).to_set
+  end
+
   private
 
   def password_required?
