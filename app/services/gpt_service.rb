@@ -1,7 +1,7 @@
 require "openai"
 require_relative "application_service"
 
-class ChatGPTService < ApplicationService
+class GptService < ApplicationService
   def initialize
     super
 
@@ -32,7 +32,7 @@ class ChatGPTService < ApplicationService
 end
 
 if __FILE__ == $PROGRAM_NAME
-  service = ChatGPTService.new
+  service = GptService.new
   prompt = "railsにクリーンアーキテクチャ拒絶された…"
   Rails.logger.info service.chat(prompt)
 end
