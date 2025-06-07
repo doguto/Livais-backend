@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_28_123616) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_04_164736) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -44,6 +44,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_123616) do
     t.index ["user_id", "post_id"], name: "index_likes_on_user_id_and_post_id", unique: true
   end
 
+  create_table "notices", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "notifiable_type", null: false
+    t.integer "notifiable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notices_on_notifiable"
+    t.index ["user_id"], name: "index_notices_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,6 +61,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_123616) do
     t.string "content", limit: 280
     t.string "status", default: "published"
     t.integer "reply_to_id"
+    t.integer "likes_count", default: 0, null: false
+    t.integer "replies_count", default: 0, null: false
+    t.integer "reposts_count", default: 0, null: false
     t.index ["reply_to_id"], name: "index_posts_on_reply_to_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -86,6 +99,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_123616) do
   add_foreign_key "ai_users", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "notices", "users"
   add_foreign_key "posts", "posts", column: "reply_to_id"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
