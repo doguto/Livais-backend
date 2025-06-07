@@ -3,7 +3,7 @@ require "logger"
 
 class TestChatGptService
   def initialize
-    @service = ChatGPTService.new
+    @service = GptService.new
   end
 
   def test_chat_gpt_service
