@@ -2,7 +2,7 @@ module Common::AiUsers
   class AiPostDomain < ApplicationDomain
     def initialize
       super
-      @gpt_service = ChatGPTService.new
+      @gpt_service = GptService.new
     end
 
     def execute(_user_id)
