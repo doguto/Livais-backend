@@ -1,5 +1,5 @@
 module Common::AiUsers
-  class AIPostDomain < ApplicationDomain
+  class AiPostDomain < ApplicationDomain
     def initialize
       super
       @gpt_service = ChatGPTService.new
