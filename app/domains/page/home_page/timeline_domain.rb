@@ -1,22 +1,17 @@
 module Page::HomePage
   class TimelineDomain < ApplicationDomain
-    def initialize
-      super
-      @follow_state_get_service = FollowStateGetService.new
-    end
+    def execute
+      posts = Post.order(created_at: :desc).limit(50).includes(
+        :user,
+        :current_user_likes,
+        :current_user_reposts
+      )
 
-    def execute(current_user_id: 1)
-      # 仮に現在のUserをid=1としている
-      user = User.find(current_user_id)
-      posts = Post.order(created_at: :desc).limit(50)
-      dtos = []
-      posts.each do |post|
-        is_following_user = @follow_state_get_service.following_user?(user_id: user.id, opponent_id: post.user_id)
-        dto = PostDto.new(post, is_following_user: is_following_user)
-        dtos.push(dto)
-      end
+      current_user = Current.current_user
 
-      dtos
+      following_user_ids = current_user ? current_user.following_ids_as_set : Set.new
+
+      PostDto.from_collection(posts, following_ids: following_user_ids)
     end
   end
 end
