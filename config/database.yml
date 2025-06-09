@@ -8,7 +8,6 @@ default: &default
   adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  adapter: mysql2
   encoding: utf8mb4
   charset: utf8mb4
   collation: utf8mb4_general_ci
@@ -32,6 +31,9 @@ test:
 # Store production database in the storage/ directory, which by default
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
+  adapter: mysql2
+  encoding: utf8mb4
+
   primary:
     <<: *default
     database: Livais_dev_db_1
