@@ -32,10 +32,8 @@ production:
   username: <%= ENV.fetch("DATABASE_USERNAME") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD") %>
   host: <%= ENV.fetch("DATABASE_HOST") %>
+  database: Livais_dev_db_1
 
-  primary:
-    <<: *default
-    database: Livais_dev_db_1
   cache:
     <<: *default
     database: Livais_cache_db
