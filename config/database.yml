@@ -28,18 +28,33 @@ test:
 # Store production database in the storage/ directory, which by default
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
-  adapter: mysql2
-  username: <%= ENV.fetch("DATABASE_USERNAME") %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") %>
-  host: <%= ENV.fetch("DATABASE_HOST") %>
-  database: Livais_dev_db_1
+  primary:
+    adapter: mysql2
+    encoding: utf8mb4
+    host: <%= ENV.fetch("DATABASE_HOST") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
+    database: Livais_main_db
+
+  queue:
+    adapter: mysql2
+    encoding: utf8mb4
+    host: <%= ENV.fetch("DATABASE_HOST") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
+    database: Livais_queue_db
 
   cache:
-    <<: *default
+    adapter: mysql2
+    encoding: utf8mb4
+    host: <%= ENV.fetch("DATABASE_HOST") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
     database: Livais_cache_db
-  queue:
-    <<: *default
-    database: Livais_queue_db
   cable:
-    <<: *default
+    adapter: mysql2
+    encoding: utf8mb4
+    host: <%= ENV.fetch("DATABASE_HOST") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
     database: Livais_cable_db
