@@ -34,7 +34,7 @@ production:
     host: <%= ENV.fetch("DATABASE_HOST") %>
     username: <%= ENV.fetch("DATABASE_USERNAME") %>
     password: <%= ENV.fetch("DATABASE_PASSWORD") %>
-    database: Livais_main_db
+    database: Livais_dev_db_1
 
   queue:
     adapter: mysql2
