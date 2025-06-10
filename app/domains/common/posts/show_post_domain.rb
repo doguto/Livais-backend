@@ -1,22 +1,33 @@
 module Common::Posts
   class ShowPostDomain < ApplicationDomain
-    def initialize
-      super
-      @follow_state_get_service = FollowStateGetService.new
-      @post_like_checker_service = PostLikeCheckerService.new
-    end
+    def execute(post_id:)
+      post = Post.includes(
+        :user,
+        :current_user_likes,
+        :current_user_reposts,
+        { replies: [
+          :user,
+          :current_user_likes,
+          :current_user_reposts
+        ] }
+      ).find(post_id)
 
-    def execute(post_id:, current_user_id: Current.current_user&.id)
-      post = Post.includes(:user, :replies, :likes, :reposts).find(post_id)
-      liked = @post_like_checker_service.exists?(post_id: post.id, user_id: current_user_id)
-      is_following_post = @follow_state_get_service.following_user?(user_id: current_user_id, opponent_id: post.user.id)
+      current_user = Current.current_user
+      following_user_ids = current_user ? current_user.following_ids_as_set : Set.new
 
-      reply_posts = post.replies.order(created_at: :asc).map do |reply|
-        is_following_reply = @follow_state_get_service.following_user?(user_id: current_user_id, opponent_id: reply.user.id)
-        PostDto.new(reply, is_following_user: is_following_reply, current_user_id: current_user_id).get
-      end
+      is_liked = post.current_user_likes.any?
+      is_reposted = post.current_user_reposts.any?
+      is_following_user = following_user_ids.include?(post.user.id)
 
-      PostDetailDto.new(post: post, is_following_user: is_following_post, current_user: Current.current_user, liked_by_current_user: liked, replies: reply_posts)
+      reply_posts_dtos = PostDto.from_collection(post.replies, following_ids: following_user_ids)
+
+      PostDetailDto.new(
+        post: post,
+        is_following_user: is_following_user,
+        is_liked: is_liked,
+        is_reposted: is_reposted,
+        replies: reply_posts_dtos.map(&:get)
+      )
     end
   end
 end

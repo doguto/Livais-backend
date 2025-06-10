@@ -1,6 +1,6 @@
 class Posts::LikesController < ApplicationController
   def create
-    successon = Common::Posts::UserLikeDomain.new.execute(user_id: params[:user_id], post_id: params[:post_id])
+    successon = Common::Posts::UserLikeDomain.new.execute(post_id: params[:post_id])
 
     render json: { message: "Success" }, status: :ok if successon
   rescue StandardError => e
