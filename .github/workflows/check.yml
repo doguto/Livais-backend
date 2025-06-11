@@ -46,6 +46,11 @@ jobs:
     #    ports:
     #      - 6379:6379
     #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DATABASE_HOST = ${{ vars.DATABASE_HOST }}
+      DATABASE_PASSWORD = ${{ vars.DATABASE_PASSWORD }}
+      DATABASE_USERNAME = ${{ vars.DATABASE_USER_NAME }}
+    
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config
