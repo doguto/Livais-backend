@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_04_164736) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_11_080106) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -54,6 +54,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_164736) do
     t.integer "likes_count", default: 0, null: false
     t.integer "replies_count", default: 0, null: false
     t.integer "reposts_count", default: 0, null: false
+    t.integer "quoted_post_id"
+    t.integer "quotes_count", default: 0, null: false
+    t.index ["quoted_post_id"], name: "index_posts_on_quoted_post_id"
     t.index ["reply_to_id"], name: "index_posts_on_reply_to_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -89,6 +92,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_164736) do
   add_foreign_key "ai_users", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "posts", "posts", column: "quoted_post_id"
   add_foreign_key "posts", "posts", column: "reply_to_id"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
