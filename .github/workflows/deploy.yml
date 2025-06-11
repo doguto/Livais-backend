@@ -21,4 +21,4 @@ jobs:
          echo "${{ secrets.PRIVATE_KEY }}" > private_key
          chmod 600 private_key
          ssh -i private_key -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} "cd /www/var/Livais-backend && git pull git@github.com:doguto/Livais-backend.git"
-         
+         rm private_key
