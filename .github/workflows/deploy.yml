@@ -20,5 +20,5 @@ jobs:
          # SSH接続して、git pullする
          echo "${{ secrets.PRIVATE_KEY }}" > private_key
          chmod 600 private_key
-         ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key "cd /www/var/Livais-backend && git fetch git@github.com:doguto/Livais-backend.git && git pull git@github.com:doguto/Livais-backend.git"
+         ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key "cd /www/var/Livais-backend && git pull git@github.com:doguto/Livais-backend.git"
          
