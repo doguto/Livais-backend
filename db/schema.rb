@@ -21,36 +21,46 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_11_080106) do
   create_table "ai_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "ai_model_id", null: false
+    t.bigint "ai_model_id", null: false
+    t.bigint "user_id", null: false
     t.index ["ai_model_id"], name: "index_ai_users_on_ai_model_id"
     t.index ["user_id"], name: "index_ai_users_on_user_id"
   end
 
   create_table "follows", force: :cascade do |t|
-    t.integer "follower_id", null: false
-    t.integer "followed_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "follower_id"
+    t.bigint "followed_id"
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "post_id"
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "post_id"], name: "index_likes_on_user_id_and_post_id", unique: true
   end
 
+  create_table "notices", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "notifiable_type", null: false
+    t.bigint "notifiable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notices_on_notifiable"
+    t.index ["user_id"], name: "index_notices_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "content", limit: 280
     t.string "status", default: "published"
-    t.integer "reply_to_id"
+    t.bigint "reply_to_id"
     t.integer "likes_count", default: 0, null: false
     t.integer "replies_count", default: 0, null: false
     t.integer "reposts_count", default: 0, null: false
@@ -62,7 +72,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_11_080106) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.text "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,8 +80,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_11_080106) do
   end
 
   create_table "reposts", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "post_id"
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "post_id"], name: "index_reposts_on_user_id_and_post_id", unique: true
@@ -92,6 +102,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_11_080106) do
   add_foreign_key "ai_users", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "notices", "users"
   add_foreign_key "posts", "posts", column: "quoted_post_id"
   add_foreign_key "posts", "posts", column: "reply_to_id"
   add_foreign_key "posts", "users"

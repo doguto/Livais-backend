@@ -4,7 +4,7 @@ class TestAIReplyDomain < TestDomain
   def initialize
     super
 
-    @gpt_service = ChatGPTService.new
+    @gpt_service = GptService.new
   end
 
   def test_ai_reply(post_text:)
