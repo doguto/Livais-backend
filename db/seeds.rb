@@ -86,14 +86,18 @@ while repost_set.size < NUM_REPOSTS && attempts < max_attempts
   repost_set << [user.id, post.id]
 end
 
-count = 1
-10.times do
+100.times do
+  user = User.order("RANDOM()").first
+  post = Post.order("RANDOM()").first
+
+  next if Notice.exists?(user: user, notifiable: post)
+
   Notice.create!(
-    user_id: 91,
-    notifiable_type: "Follow",
-    notifiable_id: count
+    user: user,
+    notifiable: post,
+    created_at: Faker::Time.backward(days: 30),
+    updated_at: Time.current
   )
-  count += 1  
 end
 
 
