@@ -1,5 +1,7 @@
 # Livais-Backend
 AI×SNS
+### Status
+[![deploy to dev](https://github.com/doguto/Livais-backend/actions/workflows/deploy.yml/badge.svg)](https://github.com/doguto/Livais-backend/actions/workflows/deploy.yml)
 
 ## External Links
 X: https://x.com/livaisapp
