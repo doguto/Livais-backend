@@ -1,12 +1,16 @@
 require "openai"
-require "logger"
+require_relative "application_service"
 
-class ChatGPTService
+class GptService < ApplicationService
   def initialize
+    super
+
     @client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY", nil))
   end
 
-  def chat(user_prompt, system_prompt = "あなたはツイッターのユーザーです。ポストに対し、100字以内で返信のツイートをしてください。関西弁で。記号やマークダウン形式（**など）は使用しないでください。")
+  # @param [String] user_prompt
+  # @param [String] system_prompt
+  def chat(user_prompt:, system_prompt: "あなたはツイッターのユーザーです。ポストに対し、100字以内で返信のツイートをしてください。丁寧語や敬語は不要。記号やマークダウン形式（**など）は使用しないで。")
     response = @client.chat(
       parameters: {
         model: "gpt-4o-mini",
@@ -27,9 +31,8 @@ class ChatGPTService
   end
 end
 
-
 if __FILE__ == $PROGRAM_NAME
-  service = ChatGPTService.new
+  service = GptService.new
   prompt = "railsにクリーンアーキテクチャ拒絶された…"
   Rails.logger.info service.chat(prompt)
 end

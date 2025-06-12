@@ -7,3 +7,8 @@ db/schema.rb linguist-generated
 vendor/* linguist-vendored
 config/credentials/*.yml.enc diff=rails_credentials
 config/credentials.yml.enc diff=rails_credentials
+
+
+app/**/*.rb text=auto eol=lf
+config/**/*.rb text=auto eol=lf
+lib/**/*.rb text=auto eol=lf
