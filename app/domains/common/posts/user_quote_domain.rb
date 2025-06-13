@@ -4,7 +4,7 @@ module Common::Posts
       user = Current.current_user
       quoted_post = Post.find(quoted_post_id)
 
-      post = Post.new(user: user, content: content, quoted_post: quoted_post, quoted_post_id: quoted_post.id)
+      post = Post.new(user: user, content: content, quoted_post: quoted_post)
       if post.save
         post
       else

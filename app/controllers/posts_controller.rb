@@ -12,17 +12,16 @@ class PostsController < ApplicationController
   end
 
   def create
-    post_data = params[:post]
-    quoted_post_id = post_data[:quoted_post_id]
+    quoted_post_id = post_params[:quoted_post_id]
 
     post = if quoted_post_id.present?
              Common::Posts::UserQuoteDomain.new.execute(
-               content: post_data[:content],
+               content: post_params[:content],
                quoted_post_id: quoted_post_id
              )
            else
              Common::Posts::UserPostDomain.new.execute(
-               content: post_data[:content]
+               content: post_params[:content]
              )
            end
 
