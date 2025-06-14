@@ -1,3 +1,10 @@
+Repost.destroy_all
+Like.destroy_all
+Post.destroy_all
+User.destroy_all
+Profile.destroy_all
+Follow.destroy_all
+
 require "faker"
 
 NUM_USERS = 10
@@ -41,25 +48,30 @@ posts = []
 
 NUM_POSTS.times do
   user = users.sample
-  if posts.any? && rand < 0.3
+  post_attributes = {
+    user: user,
+    status: "published",
+    created_at: Faker::Time.backward(days: 30)
+  }
+
+  roll = rand
+
+  if posts.any? && roll < 0.2
+    quoted_post = posts.sample
+    post_attributes[:content] = "This is a quote: " + Faker::Lorem.sentence(word_count: rand(5..15))
+    post_attributes[:quoted_post_id] = quoted_post.id
+
+  elsif posts.any? && roll < 0.5
     parent_post = posts.sample
-    post = user.posts.create!(
-      content: "Reply: " + Faker::Lorem.sentence(word_count: rand(5..15)),
-      status: "published",
-      reply_to_id: parent_post.id,
-      created_at: Faker::Time.backward(days: 30),
-      updated_at: Time.current
-    )
+    post_attributes[:content] = "Replying to this: " + Faker::Lorem.sentence(word_count: rand(5..15))
+    post_attributes[:reply_to_id] = parent_post.id
+
   else
-    post = user.posts.create!(
-      content: Faker::Lorem.sentence(word_count: rand(5..15)),
-      status: "published",
-      created_at: Faker::Time.backward(days: 30),
-      updated_at: Time.current
-    )
+    post_attributes[:content] = Faker::Lorem.sentence(word_count: rand(10..20))
   end
 
-  posts << post
+  new_post = Post.create!(post_attributes)
+  posts << new_post
 end
 
 puts "Seeding likes..."

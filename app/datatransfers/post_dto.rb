@@ -4,6 +4,18 @@ class PostDto
     @is_following_user = is_following_user
     @is_liked = is_liked
     @is_reposted = is_reposted
+    @quoted_post = if post.quoted_post.present?
+                     {
+                       "id" => post.quoted_post.id,
+                       "content" => post.quoted_post.content,
+                       "created_at" => post.quoted_post.created_at,
+                       "user" => {
+                         "id" => post.quoted_post.user.id,
+                         "name" => post.quoted_post.user.name,
+                         "image" => post.quoted_post.user.image
+                       }
+                     }.camelize
+                   end
   end
 
   def get
@@ -24,7 +36,8 @@ class PostDto
       "likes_count" => @post.likes_count,
       "reposts_count" => @post.reposts_count,
       "is_liked" => @is_liked,
-      "is_reposted" => @is_reposted
+      "is_reposted" => @is_reposted,
+      "quoted_post" => @quoted_post
     }.camelize
   end
 
