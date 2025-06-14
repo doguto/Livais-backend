@@ -29,25 +29,32 @@ test:
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
   primary:
-    adapter: sqlite3
-    database: storage/production.sqlite3
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
+    adapter: mysql2
+    encoding: utf8mb4
+    host: <%= ENV["DATABASE_HOST"] %>
+    username: <%= ENV["DATABASE_USERNAME"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %>
+    database: Livais_dev_db_1
 
   queue:
-    adapter: sqlite3
-    database: storage/queue.sqlite3
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
+    adapter: mysql2
+    encoding: utf8mb4
+    host: <%= ENV["DATABASE_HOST"] %>
+    username: <%= ENV["DATABASE_USERNAME"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %>
+    database: Livais_queue_db
 
   cache:
-    adapter: sqlite3
-    database: storage/cache.sqlite3
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-
+    adapter: mysql2
+    encoding: utf8mb4
+    host: <%= ENV["DATABASE_HOST"] %>
+    username: <%= ENV["DATABASE_USERNAME"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %>
+    database: Livais_cache_db
   cable:
-    adapter: sqlite3
-    database: storage/cable.sqlite3
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
+    adapter: mysql2
+    encoding: utf8mb4
+    host: <%= ENV["DATABASE_HOST"] %>
+    username: <%= ENV["DATABASE_USERNAME"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %>
+    database: Livais_cable_db
