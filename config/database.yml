@@ -58,4 +58,3 @@ production:
     username: <%= ENV.fetch("DATABASE_USERNAME") %>
     password: <%= ENV.fetch("DATABASE_PASSWORD") %>
     database: Livais_cable_db
-    
