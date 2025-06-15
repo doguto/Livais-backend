@@ -1,4 +1,4 @@
-class CreateNotices < ActiveRecord::Migration[8.0]
+class CreateNoticesTable < ActiveRecord::Migration[8.0]
   def change
     unless table_exists?(:notices)
       create_table :notices do |t|

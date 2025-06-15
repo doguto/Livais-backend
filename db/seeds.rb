@@ -1,8 +1,8 @@
 require "faker"
 
-NUM_USERS = 10
+NUM_USERS = 20
 NUM_POSTS = 50
-NUM_FOLLOWS = 30
+NUM_FOLLOWS = 120
 NUM_LIKES = 150
 NUM_REPOSTS = 120
 
@@ -27,8 +27,8 @@ puts "Seeding follow relationships..."
 follow_set = Set.new
 
 while follow_set.size < NUM_FOLLOWS
-  follower = users.sample
-  followed = users.sample
+  follower = User.all.sample
+  followed = User.all.sample
 
   next if follower == followed || follow_set.include?([follower.id, followed.id])
 
@@ -87,14 +87,16 @@ while repost_set.size < NUM_REPOSTS && attempts < max_attempts
 end
 
 100.times do
-  user = User.order("RANDOM()").first
-  post = Post.order("RANDOM()").first
+  user = User.all.sample
+  follow = Follow.find_by(followed_id: user.id)
+  next unless follow
 
-  next if Notice.exists?(user: user, notifiable: post)
+  next if Notice.exists?(user: user, notifiable: follow)
 
+  puts "Creating notice for user #{user.id} and follow #{follow.id}"
   Notice.create!(
     user: user,
-    notifiable: post,
+    notifiable: follow,
     created_at: Faker::Time.backward(days: 30),
     updated_at: Time.current
   )
