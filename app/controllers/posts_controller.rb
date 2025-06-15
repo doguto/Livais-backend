@@ -12,7 +12,19 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Common::Posts::UserPostDomain.new(user_id: params[:post][:user_id]).execute(content: params[:post][:content])
+    quoted_post_id = post_params[:quoted_post_id]
+
+    post = if quoted_post_id.present?
+             Common::Posts::UserQuoteDomain.new.execute(
+               content: post_params[:content],
+               quoted_post_id: quoted_post_id
+             )
+           else
+             Common::Posts::UserPostDomain.new.execute(
+               content: post_params[:content]
+             )
+           end
+
     render json: post.as_json.camelize, status: :created
   rescue ActiveRecord::RecordNotFound
     render json: { error: "User not found" }, status: :not_found
@@ -28,6 +40,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.expect(post: [:content, :user_id])
+    params.expect(post: [:content, :quoted_post_id])
   end
 end

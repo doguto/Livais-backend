@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_12_161355) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -21,17 +21,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
   create_table "ai_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "ai_model_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "ai_model_id", null: false
     t.index ["ai_model_id"], name: "index_ai_users_on_ai_model_id"
     t.index ["user_id"], name: "index_ai_users_on_user_id"
   end
 
   create_table "follows", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "follower_id"
     t.bigint "followed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
@@ -50,7 +50,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
     t.bigint "notifiable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["notifiable_type", "notifiable_id"], name: "index_notices_on_notifiable"
     t.index ["user_id"], name: "index_notices_on_user_id"
   end
 
@@ -64,6 +63,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
     t.integer "likes_count", default: 0, null: false
     t.integer "replies_count", default: 0, null: false
     t.integer "reposts_count", default: 0, null: false
+    t.bigint "quoted_post_id"
+    t.integer "quotes_count", default: 0, null: false
+    t.index ["quoted_post_id"], name: "index_posts_on_quoted_post_id"
     t.index ["reply_to_id"], name: "index_posts_on_reply_to_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -100,6 +102,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "notices", "users"
+  add_foreign_key "posts", "posts", column: "quoted_post_id"
   add_foreign_key "posts", "posts", column: "reply_to_id"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
