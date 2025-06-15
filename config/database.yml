@@ -31,30 +31,31 @@ production:
   primary:
     adapter: mysql2
     encoding: utf8mb4
-    host: <%= ENV["DATABASE_HOST"] %>
-    username: <%= ENV["DATABASE_USERNAME"] %>
-    password: <%= ENV["DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("DATABASE_HOST") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
     database: Livais_dev_db_1
 
   queue:
     adapter: mysql2
     encoding: utf8mb4
-    host: <%= ENV["DATABASE_HOST"] %>
-    username: <%= ENV["DATABASE_USERNAME"] %>
-    password: <%= ENV["DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("DATABASE_HOST") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
     database: Livais_queue_db
 
   cache:
     adapter: mysql2
     encoding: utf8mb4
-    host: <%= ENV["DATABASE_HOST"] %>
-    username: <%= ENV["DATABASE_USERNAME"] %>
-    password: <%= ENV["DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("DATABASE_HOST") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
     database: Livais_cache_db
   cable:
     adapter: mysql2
     encoding: utf8mb4
-    host: <%= ENV["DATABASE_HOST"] %>
-    username: <%= ENV["DATABASE_USERNAME"] %>
-    password: <%= ENV["DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("DATABASE_HOST") %>
+    username: <%= ENV.fetch("DATABASE_USERNAME") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD") %>
     database: Livais_cable_db
+    
