@@ -26,7 +26,8 @@ class NoticeDto
         user: {
           id: @user.id,
           name: @user.name,
-          image: @user.image
+          image: @user.image,
+          is_following: true
         }.camelize,
         post: {
           id: @post.id,
