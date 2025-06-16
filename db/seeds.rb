@@ -88,18 +88,20 @@ end
 
 100.times do
   user = User.all.sample
-  follow = Follow.find_by(followed_id: user.id)
-  next unless follow
+  follows = Follow.where(followed_id: user.id)
+  next unless follows
 
-  next if Notice.exists?(user: user, notifiable: follow)
+  follows.each do |follow|
+    next if Notice.exists?(user: user, notifiable: follow)
 
-  puts "Creating notice for user #{user.id} and follow #{follow.id}"
-  Notice.create!(
-    user: user,
-    notifiable: follow,
-    created_at: Faker::Time.backward(days: 30),
-    updated_at: Time.current
-  )
+    puts "Creating notice for user #{user.id} and follow #{follow.id}"
+    Notice.create!(
+      user: user,
+      notifiable: follow,
+      created_at: Faker::Time.backward(days: 30),
+      updated_at: Time.current
+    )
+  end 
 end
 
 
