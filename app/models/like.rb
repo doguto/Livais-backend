@@ -4,4 +4,9 @@ class Like < ApplicationRecord
   has_one :notifiable, as: :notifiable, dependent: :destroy
 
   validates :user_id, uniqueness: { scope: :post_id, message: "has already liked this post" }
+
+  after_create :create_notification
+  def create_notification
+    Notice.create(user_id: post.user_id, notifiable: self)
+  end
 end
