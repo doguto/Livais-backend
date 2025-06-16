@@ -4,7 +4,7 @@ module Page::NoticePage
     FOLLOW_NOTICE_TYPE = ["Follow"].freeze
 
     def execute
-      notices = Notice.where(user_id: Current.current_user&.id).includes(:notifiable).order(created_at: :desc)
+      notices = Notice.where(user_id: Current.current_user&.id, is_hide: false).includes(:notifiable).order(created_at: :desc)
       dtos = []
       notices.map do |notice|
         if FOLLOW_NOTICE_TYPE.include?(notice.notifiable_type)

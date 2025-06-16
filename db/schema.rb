@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_16_032736) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -50,6 +50,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
     t.bigint "notifiable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_hide", default: false, null: false
     t.index ["notifiable_type", "notifiable_id"], name: "index_notices_on_notifiable"
     t.index ["user_id"], name: "index_notices_on_user_id"
   end
