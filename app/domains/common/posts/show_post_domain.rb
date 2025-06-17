@@ -5,11 +5,13 @@ module Common::Posts
         :user,
         :current_user_likes,
         :current_user_reposts,
-        { replies: [
+        quoted_post: :user,
+        replies: [
           :user,
           :current_user_likes,
-          :current_user_reposts
-        ] }
+          :current_user_reposts,
+          { quoted_post: :user }
+        ]
       ).find(post_id)
 
       current_user = Current.current_user
