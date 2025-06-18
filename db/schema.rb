@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_12_161355) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_18_064421) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -78,6 +78,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_12_161355) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "replies", force: :cascade do |t|
+    t.integer "parent_post_id", null: false
+    t.integer "child_post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_post_id"], name: "index_replies_on_child_post_id"
+    t.index ["parent_post_id"], name: "index_replies_on_parent_post_id"
+  end
+
   create_table "reposts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
@@ -106,4 +115,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_12_161355) do
   add_foreign_key "posts", "posts", column: "reply_to_id"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "replies", "posts", column: "child_post_id"
+  add_foreign_key "replies", "posts", column: "parent_post_id"
 end
