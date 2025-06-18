@@ -25,7 +25,7 @@ class PostDto
       "created_at" => @post.created_at,
       "updated_at" => @post.updated_at,
       "user_id" => @post.user_id,
-      "reply_to_id" => @post.reply_to_id,
+      "reply_to_id" => @post.parent_post&.id,
       "user" => {
         "id" => @post.user.id,
         "name" => @post.user.name,
