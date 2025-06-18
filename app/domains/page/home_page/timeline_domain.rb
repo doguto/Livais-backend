@@ -5,6 +5,7 @@ module Page::HomePage
         :user,
         :current_user_likes,
         :current_user_reposts,
+        :parent_post,
         quoted_post: :user
       )
 

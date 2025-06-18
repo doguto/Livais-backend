@@ -5,8 +5,9 @@ module Common::Posts
         :user,
         :current_user_likes,
         :current_user_reposts,
+        :parent_post,
         quoted_post: :user,
-        replies: [
+        child_posts: [
           :user,
           :current_user_likes,
           :current_user_reposts,
@@ -21,7 +22,7 @@ module Common::Posts
       is_reposted = post.current_user_reposts.any?
       is_following_user = following_user_ids.include?(post.user.id)
 
-      reply_posts_dtos = PostDto.from_collection(post.replies, following_ids: following_user_ids)
+      reply_posts_dtos = PostDto.from_collection(post.child_posts, following_ids: following_user_ids)
 
       PostDetailDto.new(
         post: post,
