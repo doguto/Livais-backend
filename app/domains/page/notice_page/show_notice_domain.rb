@@ -7,28 +7,19 @@ module Page::NoticePage
 
     def execute
       notices = Notice.where(user_id: Current.current_user&.id, is_hide: false).includes(:notifiable).order(created_at: :desc)
-      dtos = []
       notices.map do |notice|
         if FOLLOW_NOTICE_TYPE.include?(notice.notifiable_type)
-          from_user = User.find_by(id: notice.notifiable.follower_id)
-          dtos << NoticeDto.new(notice, user: from_user)
+          NoticeDto.new(notice, user_id: notice.notifiable.follower_id)
         elsif POST_NOTICE_TYPE.include?(notice.notifiable_type)
-          from_user = User.find_by(id: notice.notifiable.user_id)
-          post = Post.find_by(id: notice.notifiable.post_id)
-          dtos << NoticeDto.new(notice, user: from_user, post: post)
+          NoticeDto.new(notice, user_id: notice.notifiable.user_id, post_id: notice.notifiable.post_id)
         elsif REPLY_TYPE.include?(notice.notifiable_type)
-          from_user = User.find_by(id: notice.notifiable.child_post.user_id)
-          post = Post.find_by(id: notice.notifiable.child_post_id)
-          dtos << NoticeDto.new(notice, user: from_user, post: post)
+          NoticeDto.new(notice, user_id: notice.notifiable.child_post.user_id, post_id: notice.notifiable.child_post_id)
         elsif QUOTE_TYPE.include?(notice.notifiable_type)
-          from_user = User.find_by(id: notice.notifiable.quoting_post.user_id)
-          post = Post.find_by(id: notice.notifiable.quoting_post_id)
-          dtos << NoticeDto.new(notice, user: from_user, post: post)
+          NoticeDto.new(notice, user_id: notice.notifiable.quoting_post.user_id, post_id: notice.notifiable.quoting_post_id)
         else
-          dtos << NoticeDto.new(notice)
+          NoticeDto.new(notice)
         end
       end
-      dtos
     end
   end
 end
