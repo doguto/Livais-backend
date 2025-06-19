@@ -1,9 +1,11 @@
 Repost.destroy_all
 Like.destroy_all
+Reply.destroy_all
+Quote.destroy_all
 Post.destroy_all
-User.destroy_all
-Profile.destroy_all
 Follow.destroy_all
+Profile.destroy_all
+User.destroy_all
 
 require "faker"
 
@@ -59,7 +61,6 @@ NUM_POSTS.times do
   if posts.any? && roll < 0.2
     quoted_post = posts.sample
     post_attributes[:content] = "This is a quote: " + Faker::Lorem.sentence(word_count: rand(5..15))
-    post_attributes[:quoted_post_id] = quoted_post.id
 
   elsif posts.any? && roll < 0.5
     parent_post = posts.sample
@@ -71,6 +72,13 @@ NUM_POSTS.times do
   end
 
   new_post = Post.create!(post_attributes)
+
+  if posts.any? && roll < 0.2
+    Quote.create!(quoted_post: quoted_post, quoting_post: new_post)
+  elsif posts.any? && roll < 0.5
+    Reply.create!(parent_post: parent_post, child_post: new_post)
+  end
+
   posts << new_post
 end
 
@@ -84,7 +92,7 @@ end
 
 puts "Seeding reposts..."
 repost_set = Set.new
-max_attempts = NUM_REPOSTS * 10 
+max_attempts = NUM_REPOSTS * 10
 attempts = 0
 
 while repost_set.size < NUM_REPOSTS && attempts < max_attempts
@@ -97,6 +105,5 @@ while repost_set.size < NUM_REPOSTS && attempts < max_attempts
   Repost.create!(user: user, post: post)
   repost_set << [user.id, post.id]
 end
-
 
 puts "✅ Done!"

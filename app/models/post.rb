@@ -15,7 +15,6 @@ class Post < ApplicationRecord
   has_many :child_replies, class_name: "Reply", inverse_of: :parent_post, dependent: :destroy, counter_cache: :replies_count
   has_many :child_posts, class_name: "Post", through: :child_replies, source: :child_post
 
-  belongs_to :quoted_post, class_name: "Post", optional: true, counter_cache: :quotes_count
-
-  has_many :quoting_posts, class_name: "Post", foreign_key: "quoted_post_id", dependent: :nullify, inverse_of: :quoted_post
+  has_one :quote, class_name: "Quote", inverse_of: :quoting_post, dependent: :nullify
+  has_one :quoted_post, class_name: "Post", through: :quote
 end
