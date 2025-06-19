@@ -16,5 +16,5 @@
 
 class Quote < ApplicationRecord
   belongs_to :quoted_post, class_name: "Post"
-  belongs_to :quoting_post, class_name: "Post", inverse_of: :quote_post
+  belongs_to :quoting_post, class_name: "Post", inverse_of: :quote
 end
