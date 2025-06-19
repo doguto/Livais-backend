@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_16_032736) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_18_141825) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -51,7 +51,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_032736) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_hide", default: false, null: false
-    t.index ["notifiable_type", "notifiable_id"], name: "index_notices_on_notifiable"
     t.index ["user_id"], name: "index_notices_on_user_id"
   end
 
@@ -65,6 +64,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_032736) do
     t.integer "likes_count", default: 0, null: false
     t.integer "replies_count", default: 0, null: false
     t.integer "reposts_count", default: 0, null: false
+    t.bigint "quoted_post_id"
+    t.integer "quotes_count", default: 0, null: false
+    t.index ["quoted_post_id"], name: "index_posts_on_quoted_post_id"
     t.index ["reply_to_id"], name: "index_posts_on_reply_to_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -75,6 +77,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_032736) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "quotes", force: :cascade do |t|
+    t.bigint "quoted_post_id", null: false
+    t.bigint "quoting_post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quoted_post_id"], name: "index_quotes_on_quoted_post_id"
+    t.index ["quoting_post_id"], name: "index_quotes_on_quoting_post_id"
+  end
+
+  create_table "replies", force: :cascade do |t|
+    t.bigint "parent_post_id", null: false
+    t.bigint "child_post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_post_id"], name: "index_replies_on_child_post_id"
+    t.index ["parent_post_id"], name: "index_replies_on_parent_post_id"
   end
 
   create_table "reposts", force: :cascade do |t|
@@ -101,7 +121,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_032736) do
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "notices", "users"
+  add_foreign_key "posts", "posts", column: "quoted_post_id"
   add_foreign_key "posts", "posts", column: "reply_to_id"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "quotes", "posts", column: "quoted_post_id"
+  add_foreign_key "quotes", "posts", column: "quoting_post_id"
+  add_foreign_key "replies", "posts", column: "child_post_id"
+  add_foreign_key "replies", "posts", column: "parent_post_id"
 end
