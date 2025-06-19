@@ -10,8 +10,13 @@ class Post < ApplicationRecord
   has_many :reposting_user, through: :reposts, source: :user
   has_many :current_user_reposts, -> { where(user: Current.current_user) }, class_name: "Repost", inverse_of: :post, dependent: :destroy
 
-  belongs_to :parent_post, class_name: "Post", foreign_key: "reply_to_id", optional: true, inverse_of: :replies, counter_cache: :replies_count
-  has_many :replies, class_name: "Post", foreign_key: "reply_to_id", dependent: :destroy, inverse_of: :parent_post
+  has_one :parent_reply, class_name: "Reply", inverse_of: :child_post, dependent: :destroy
+  has_one :parent_post, class_name: "Post", through: :parent_reply
+  has_many :child_replies, class_name: "Reply", inverse_of: :parent_post, dependent: :destroy, counter_cache: :replies_count
+  has_many :child_posts, class_name: "Post", through: :child_replies, source: :child_post
+
+  has_one :quote, class_name: "Quote", inverse_of: :quoting_post, dependent: :nullify
+  has_one :quoted_post, class_name: "Post", through: :quote
 
   has_one :notifiable, as: :notifiable, dependent: :destroy
 end

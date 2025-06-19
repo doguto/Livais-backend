@@ -1,12 +1,7 @@
 module Common::Posts
   class UserPostDomain < ApplicationDomain
-    def initialize(user_id:)
-      super()
-      @user_id = user_id
-    end
-
     def execute(content:)
-      user = User.find(@user_id)
+      user = Current.current_user
       post = Post.new(user: user, content: content)
       if post.save
         post

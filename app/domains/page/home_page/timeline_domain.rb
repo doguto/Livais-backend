@@ -4,7 +4,9 @@ module Page::HomePage
       posts = Post.order(created_at: :desc).limit(50).includes(
         :user,
         :current_user_likes,
-        :current_user_reposts
+        :current_user_reposts,
+        :parent_post,
+        quoted_post: :user
       )
 
       current_user = Current.current_user

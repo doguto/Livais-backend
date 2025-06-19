@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  created_at      :datetime         not null
+#  name            :string
+#  email           :string           not null
+#  image           :string
+#  password_digest :string
+#  provider        :string
+#  uid             :string
+#
+# Indexes
+#
+#  index_users_on_email  (email) UNIQUE
+#
+
 class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_one :profile, dependent: :destroy
