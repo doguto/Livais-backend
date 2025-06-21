@@ -50,6 +50,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_141825) do
     t.bigint "notifiable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_hide", default: false, null: false
     t.index ["user_id"], name: "index_notices_on_user_id"
   end
 

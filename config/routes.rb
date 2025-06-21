@@ -29,5 +29,8 @@ Rails.application.routes.draw do
     post "auth/google", to: "auth#google"
 
     get "auth/me", to: "auth#me"
+
+    get "notice/", to: "notice#index"
+    post "notice/:notice_id", to: "notice#hide"
   end
 end

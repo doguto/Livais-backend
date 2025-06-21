@@ -17,4 +17,11 @@
 class Reply < ApplicationRecord
   belongs_to :parent_post, class_name: "Post", inverse_of: :child_replies
   belongs_to :child_post, class_name: "Post", inverse_of: :parent_reply
+  has_one :notice, as: :notifiable, dependent: :destroy
+
+  after_create :create_notification
+
+  def create_notification
+    Notice.create!(user_id: parent_post.user_id, notifiable: self)
+  end
 end

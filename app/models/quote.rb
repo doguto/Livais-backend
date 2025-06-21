@@ -17,4 +17,11 @@
 class Quote < ApplicationRecord
   belongs_to :quoted_post, class_name: "Post"
   belongs_to :quoting_post, class_name: "Post", inverse_of: :quote
+  has_one :notice, as: :notifiable, dependent: :destroy
+
+  after_create :create_notification
+
+  def create_notification
+    Notice.create!(user_id: quoted_post.user_id, notifiable: self)
+  end
 end

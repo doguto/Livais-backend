@@ -36,8 +36,8 @@ puts "Seeding follow relationships..."
 follow_set = Set.new
 
 while follow_set.size < NUM_FOLLOWS
-  follower = users.sample
-  followed = users.sample
+  follower = User.all.sample
+  followed = User.all.sample
 
   next if follower == followed || follow_set.include?([follower.id, followed.id])
 
@@ -105,5 +105,24 @@ while repost_set.size < NUM_REPOSTS && attempts < max_attempts
   Repost.create!(user: user, post: post)
   repost_set << [user.id, post.id]
 end
+
+100.times do
+  user = User.all.sample
+  follows = Follow.where(followed_id: user.id)
+  next unless follows
+
+  follows.each do |follow|
+    next if Notice.exists?(user: user, notifiable: follow)
+
+    puts "Creating notice for user #{user.id} and follow #{follow.id}"
+    Notice.create!(
+      user: user,
+      notifiable: follow,
+      created_at: Faker::Time.backward(days: 30),
+      updated_at: Time.current
+    )
+  end
+end
+
 
 puts "✅ Done!"

@@ -16,6 +16,13 @@
 class Like < ApplicationRecord
   belongs_to :user
   belongs_to :post, counter_cache: true
+  has_one :notice, as: :notifiable, dependent: :destroy
 
   validates :user_id, uniqueness: { scope: :post_id, message: "has already liked this post" }
+
+  after_create :create_notification
+
+  def create_notification
+    Notice.create!(user_id: post.user_id, notifiable: self)
+  end
 end
