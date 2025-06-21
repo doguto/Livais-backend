@@ -16,7 +16,7 @@
 class Repost < ApplicationRecord
   belongs_to :user
   belongs_to :post, counter_cache: true
-  has_one :notifiable, as: :notifiable, dependent: :destroy
+  has_one :notice, as: :notifiable, dependent: :destroy
 
   after_create :create_notification
 
