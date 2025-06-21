@@ -22,6 +22,6 @@ class Follow < ApplicationRecord
   after_create :create_notification
 
   def create_notification
-    Notice.create(user_id: followed_id, notifiable: self)
+    Notice.create!(user_id: followed_id, notifiable: self)
   end
 end

@@ -23,6 +23,6 @@ class Like < ApplicationRecord
   after_create :create_notification
 
   def create_notification
-    Notice.create(user_id: post.user_id, notifiable: self)
+    Notice.create!(user_id: post.user_id, notifiable: self)
   end
 end
