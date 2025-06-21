@@ -17,6 +17,4 @@ class Post < ApplicationRecord
 
   has_one :quote, class_name: "Quote", inverse_of: :quoting_post, dependent: :nullify
   has_one :quoted_post, class_name: "Post", through: :quote
-
-  has_one :notifiable, as: :notifiable, dependent: :destroy
 end
