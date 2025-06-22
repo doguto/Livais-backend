@@ -7,8 +7,16 @@ module Page::NoticePage
 
     def execute
       user = Current.current_user
+      notice_setting = user.notice_setting
 
-      notices = Notice.where(user_id: user&.id, is_hide: false).includes(:notifiable).order(created_at: :desc)
+      notices = []
+      notices < Notice.where(user_id: user&.id, is_hide: false, notifiable_type: "Like").includes(:notifiable) if notice_setting.like_enable
+      notices < Notice.where(user_id: user&.id, is_hide: false, notifiable_type: "Reply").includes(:notifiable) if notice_setting.reply_enable
+      notices < Notice.where(user_id: user&.id, is_hide: false, notifiable_type: "Repost").includes(:notifiable) if notice_setting.repost_enable
+      notices < Notice.where(user_id: user&.id, is_hide: false, notifiable_type: "Quote").includes(:notifiable) if notice_setting.quote_enable
+      notices < Notice.where(user_id: user&.id, is_hide: false, notifiable_type: "Follow").includes(:notifiable) if notice_setting.follow_enable
+      notices.order(created_at: :desc)
+
       notices.map do |notice|
         if FOLLOW_NOTICE_TYPE.include?(notice.notifiable_type)
           next if notice.notifiable.followed_id == user.id
