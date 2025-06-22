@@ -1,7 +1,8 @@
 class NoticeController < ApplicationController
   def index
     dtos = Page::NoticePage::ShowNoticeDomain.new.execute
-    render json: dtos.map(&:get), status: :ok
+    response = dtos.nil? ? {} : dtos.map(&:get)
+    render json: response, status: :ok
   end
 
   def hide
@@ -10,8 +11,8 @@ class NoticeController < ApplicationController
   end
 
   def edit
-    NoticeSettingRo.new(params)
-    is_success = Page::NoticePage::EditNoticeSettingDomain.new.execute
+    request_obj = NoticeSettingRo.new(params)
+    is_success = Page::NoticePage::EditNoticeSettingDomain.new.execute(request_obj)
     render json: { success: is_success }, status: is_success ? :ok : :unprocessable_entity
   end
 end
