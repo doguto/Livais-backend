@@ -10,7 +10,8 @@ class NoticeController < ApplicationController
   end
 
   def edit
-    is_success = Page::NoticePage::EditNoticeSettingDomain.new.execute(params)
+    NoticeSettingRo.new(params)
+    is_success = Page::NoticePage::EditNoticeSettingDomain.new.execute
     render json: { success: is_success }, status: is_success ? :ok : :unprocessable_entity
   end
 end
