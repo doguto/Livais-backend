@@ -42,12 +42,20 @@ class User < ApplicationRecord
   has_many :reposts, dependent: :destroy
   has_many :reposted_posts, through: :reposts, source: :post
 
+  has_one :notice_setting, dependent: :destroy
+
   has_secure_password validations: false
 
   validates :password, presence: true, if: :password_required?
 
+  after_create :create_notice_setting
+
   def following_ids_as_set
     following.pluck(:id).to_set
+  end
+
+  def create_notice_setting
+    NoticeSetting.create(user_id: id)
   end
 
   private

@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+# == Schema Information
+#
+# Table name: notice_settings
+#
+#  id            :integer          not null, primary key
+#  follow_enable :boolean          default(TRUE), not null
+#  like_enable   :boolean          default(TRUE), not null
+#  quote_enable  :boolean          default(TRUE), not null
+#  reply_enable  :boolean          default(TRUE), not null
+#  repost_enable :boolean          default(TRUE), not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  user_id       :integer          not null
+#
+# Indexes
+#
+#  index_notice_settings_on_user_id  (user_id)
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

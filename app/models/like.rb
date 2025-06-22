@@ -3,10 +3,10 @@
 # Table name: likes
 #
 #  id         :integer          not null, primary key
-#  user_id    :integer
-#  post_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  post_id    :bigint
+#  user_id    :bigint
 #
 # Indexes
 #
