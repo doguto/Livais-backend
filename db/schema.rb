@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_18_141825) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_22_041650) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -42,6 +42,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_141825) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "post_id"], name: "index_likes_on_user_id_and_post_id", unique: true
+  end
+
+  create_table "notice_settings", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.boolean "like_enable", default: true, null: false
+    t.boolean "repost_enable", default: true, null: false
+    t.boolean "quote_enable", default: true, null: false
+    t.boolean "reply_enable", default: true, null: false
+    t.boolean "follow_enable", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notice_settings_on_user_id"
   end
 
   create_table "notices", force: :cascade do |t|
