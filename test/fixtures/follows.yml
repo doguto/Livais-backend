@@ -3,15 +3,20 @@
 # Table name: follows
 #
 #  id          :integer          not null, primary key
-#  follower_id :integer
-#  followed_id :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  followed_id :bigint
+#  follower_id :bigint
 #
 # Indexes
 #
 #  index_follows_on_followed_id  (followed_id)
 #  index_follows_on_follower_id  (follower_id)
+#
+# Foreign Keys
+#
+#  followed_id  (followed_id => users.id)
+#  follower_id  (follower_id => users.id)
 #
 
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
