@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
     get "auth/me", to: "auth#me"
 
+    get "profile", to: "profiles#show"
+
     get "notice/", to: "notice#index"
     post "notice/:notice_id", to: "notice#hide"
 
