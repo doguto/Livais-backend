@@ -21,17 +21,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
   create_table "ai_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "ai_model_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "ai_model_id", null: false
     t.index ["ai_model_id"], name: "index_ai_users_on_ai_model_id"
     t.index ["user_id"], name: "index_ai_users_on_user_id"
   end
 
   create_table "follows", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "follower_id"
     t.bigint "followed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
@@ -50,7 +50,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_075315) do
     t.bigint "notifiable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["notifiable_type", "notifiable_id"], name: "index_notices_on_notifiable"
     t.index ["user_id"], name: "index_notices_on_user_id"
   end
 
