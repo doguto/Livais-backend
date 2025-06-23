@@ -29,5 +29,7 @@ Rails.application.routes.draw do
     post "auth/google", to: "auth#google"
 
     get "auth/me", to: "auth#me"
+
+    get "profile", to: "profiles#show"
   end
 end
