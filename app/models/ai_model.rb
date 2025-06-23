@@ -10,4 +10,5 @@
 #
 
 class AiModel < ApplicationRecord
+  has_many :ai_users, dependent: :destroy
 end
