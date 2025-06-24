@@ -7,20 +7,7 @@ module Page::ProfilePage
 
     def execute
       user = User.includes(:profile, :followers, :following).find(@user_id)
-
-      {
-        userId: user.id,
-        user: {
-          name: user.name,
-          username: user.username,
-          image: user.image,
-          cover_image: user.profile&.cover_image,
-          bio: user.profile&.bio,
-          joinDate: user.created_at.strftime("%Y-%m-%d"),
-          followCount: user.following.count,
-          followerCount: user.followers.count
-        }
-      }
+      ProfileDto.new(user).to_h.deep_transform_keys { |key| key.to_s.camelize(:lower) }
     end
   end
 end
