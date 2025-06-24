@@ -6,7 +6,7 @@ module Page::ProfilePage
     end
 
     def execute
-      user = User.includes(:profile, :followers, :followings).find(@user_id)
+      user = User.includes(:profile, :followers, :following).find(@user_id)
 
       {
         userId: user.id,
@@ -17,7 +17,7 @@ module Page::ProfilePage
           cover_image: user.profile&.cover_image,
           bio: user.profile&.bio,
           joinDate: user.created_at.strftime("%Y-%m-%d"),
-          followCount: user.followings.count,
+          followCount: user.following.count,
           followerCount: user.followers.count
         }
       }
