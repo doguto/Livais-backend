@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       end
     end
 
+    get "/follow", to: "home_page#show_follow_timeline"
+
     post "auth/signin", to: "auth#signin"
     post "auth/signup", to: "auth#signup"
     post "auth/google", to: "auth#google"
