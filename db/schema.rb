@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_22_041650) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_23_064825) do
   create_table "ai_models", force: :cascade do |t|
     t.string "model"
     t.string "string"
@@ -45,7 +45,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_22_041650) do
   end
 
   create_table "notice_settings", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.boolean "like_enable", default: true, null: false
     t.boolean "repost_enable", default: true, null: false
     t.boolean "quote_enable", default: true, null: false
@@ -85,7 +85,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_22_041650) do
 
   create_table "profiles", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.text "bio"
+    t.text "self_introduction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
@@ -132,6 +132,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_22_041650) do
   add_foreign_key "ai_users", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "notice_settings", "users"
   add_foreign_key "notices", "users"
   add_foreign_key "posts", "posts", column: "quoted_post_id"
   add_foreign_key "posts", "posts", column: "reply_to_id"
