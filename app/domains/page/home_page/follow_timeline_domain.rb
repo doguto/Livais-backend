@@ -4,7 +4,7 @@ module Page::HomePage
       current_user = Current.current_user
       raise "User not found" unless current_user
 
-      posts = Post.where(user: current_user).order(created_at: :desc).limit(50).includes(
+      posts = Post.where(user: current_user.following).order(created_at: :desc).limit(50).includes(
         :user,
         :current_user_likes,
         :current_user_reposts,
