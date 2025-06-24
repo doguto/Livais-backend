@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   def index
-    query = params[:q]
-    filters = params[:f] || "live"
+    query = search_params[:q]
+    filters = search_params[:f] || "live"
 
     return render json: [] if query.blank?
 
