@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       end
     end
 
+    get "/", to: "home_page#show"
+
     post "auth/signin", to: "auth#signin"
     post "auth/signup", to: "auth#signup"
     post "auth/google", to: "auth#google"

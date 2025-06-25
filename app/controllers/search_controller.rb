@@ -18,6 +18,6 @@ class SearchController < ApplicationController
   private
 
   def search_params
-    SearchParameterRo.new(params.permit(:q, :f))
+    SearchParameterRo.new(params)
   end
 end
