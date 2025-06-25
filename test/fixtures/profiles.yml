@@ -2,11 +2,11 @@
 #
 # Table name: profiles
 #
-#  id         :integer          not null, primary key
-#  bio        :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint           not null
+#  id                :integer          not null, primary key
+#  self_introduction :text
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  user_id           :bigint           not null
 #
 # Indexes
 #
