@@ -1,14 +1,9 @@
 module Page::SearchPage
   class SearchPostsDomain < ApplicationDomain
-    def initialize(query)
-      super()
-      @query = query
-    end
+    def execute(query)
+      return Post.none if query.blank?
 
-    def execute
-      return Post.none if @query.blank?
-
-      posts = Post.where("content LIKE ?", "%#{@query}%").includes(
+      posts = Post.where("content LIKE ?", "%#{query}%").includes(
         :user,
         :current_user_likes,
         :current_user_reposts,
