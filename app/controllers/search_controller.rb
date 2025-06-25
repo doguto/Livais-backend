@@ -1,14 +1,13 @@
 class SearchController < ApplicationController
   def index
-    query = search_params.q
-    filters = search_params.f
+    search_ro = search_params
+    query = search_ro.q
 
     return render json: [] if query.blank?
 
-    results = case filters
-              when "live"
+    results = if search_ro.f.live?
                 Page::SearchPage::SearchPostsDomain.new.execute(query)
-              when "users"
+              elsif search_ro.f.users?
                 Page::SearchPage::SearchUsersDomain.new.execute(query)
               end
 
