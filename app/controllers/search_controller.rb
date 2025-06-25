@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def index
-    search_ro = search_params
+    search_ro = SearchParameterRo.new(params)
     query = search_ro.q
 
     return render json: [] if query.blank?
@@ -12,11 +12,5 @@ class SearchController < ApplicationController
               end
 
     render json: results.map(&:get).as_json
-  end
-
-  private
-
-  def search_params
-    SearchParameterRo.new(params)
   end
 end
