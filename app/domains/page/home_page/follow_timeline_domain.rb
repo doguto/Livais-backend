@@ -1,7 +1,7 @@
 module Page::HomePage
   class FollowTimelineDomain < ApplicationDomain
     def execute
-      current_user = User.find(11)
+      current_user = Current.current_user
       raise "User not found" unless current_user
 
       posts = Post.where(user: current_user.following).order(created_at: :desc).limit(50).includes(
