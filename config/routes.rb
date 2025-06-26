@@ -34,8 +34,10 @@ Rails.application.routes.draw do
 
     get "notice/", to: "notice#index"
     post "notice/:notice_id", to: "notice#hide"
-    post "notice/edit", to: "notice#edit"
 
     get "search", to: "search#index"
+
+    get "setting/notice", to: "setting#notice"
+    post "setting/notice/edit", to: "setting#edit_notice"
   end
 end
