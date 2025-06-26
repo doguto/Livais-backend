@@ -25,5 +25,5 @@ jobs:
          echo "${{ secrets.PRIVATE_KEY }}" > private_key
          chmod 600 private_key
          trap "rm -f private_key" EXIT
-         ssh -i private_key -o StrictHostKeyChecking=no $USER_NAME@$HOST_NAME "cd /var/www/Livais-backend && git pull git@github.com:doguto/Livais-backend.git && RAILS_ENV=production bin/rails db:migrate"
+         ssh -i private_key -o StrictHostKeyChecking=no $USER_NAME@$HOST_NAME "cd /var/www/Livais-backend && git pull git@github.com:doguto/Livais-backend.git && RAILS_ENV=production rails db:migrate"
        shell: bash
