@@ -1,4 +1,4 @@
-module Page::NoticePage
+module Page::SettingPage
   class EditNoticeSettingDomain < ApplicationDomain
     def execute(request_obj)
       Current.current_user.notice_setting.update!(
