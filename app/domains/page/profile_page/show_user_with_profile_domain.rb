@@ -1,13 +1,12 @@
 module Page::ProfilePage
   class ShowUserWithProfileDomain < ApplicationDomain
-    def initialize(user_id:)
-      super()
-      @user_id = user_id
+    def initialize
+      super
     end
 
-    def execute
-      user = User.includes(:profile, :followers, :following).find(@user_id)
-      ProfileDto.new(user).to_h.deep_transform_keys { |key| key.to_s.camelize(:lower) }
+    def execute(user_id: Current.current_user)
+      user = User.includes(:profile, :followers, :following).find(user_id)
+      ProfileDto.new(user)
     end
   end
 end

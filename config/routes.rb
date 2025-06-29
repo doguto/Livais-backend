@@ -41,5 +41,7 @@ Rails.application.routes.draw do
 
     get "setting/notice", to: "setting#notice"
     post "setting/notice/edit", to: "setting#edit_notice"
+    get "users/me", to: "profiles#me"
+    get "users/:user_id", to: "profiles#show"
   end
 end
