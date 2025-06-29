@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
     get "auth/me", to: "auth#me"
 
-    get "profile", to: "profiles#show"
+    get "users/me", to: "profiles#me"
+    get "users/:user_id", to: "profiles#show"
   end
 end

@@ -8,7 +8,6 @@ class ProfileDto
       user_id: @user.id,
       user: {
         name: @user.name,
-        username: @user.username,
         image: @user.image,
         cover_image: @user.profile&.cover_image,
         bio: @user.profile&.bio,
