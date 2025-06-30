@@ -3,7 +3,7 @@ class ProfileDto
     @user = user
   end
 
-  def get
+  def to_h
     {
       "id" => @user.id,
       "name" => @user.name,
