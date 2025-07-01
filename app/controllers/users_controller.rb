@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
-  # def show
-  #   dto = Page::ProfilePage::ShowUserWithProfileDomain.new.execute(user_id: params[:id])
-  #   render json: dto.get, status: :ok
-  # end
+  def show
+    user = User.find(params[:id])
+    dto = Page::ProfilePage::ShowUserWithProfileAndTimelineDomain
+      .new(viewer: Current.current_user, user: user)
+      .execute
+
+    render json: {
+      profile: dto[:profile].get,
+      timeline: dto[:timeline].map(&:get)
+    }, status: :ok
+  end
 
   def create
     result = Common::Users::CreateUserDomain.new(params: user_params).execute
