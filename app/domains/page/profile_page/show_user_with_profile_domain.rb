@@ -1,9 +1,9 @@
 module Page::ProfilePage
-  class ShowUserWithProfileAndTimelineDomain < ApplicationDomain
+  class ShowUserWithProfileDomain < ApplicationDomain
     def initialize(viewer:, user:)
       super()
       @viewer = viewer
-      @user = user
+      @user = User.includes(:profile, :followers, :following).find(user.id)
     end
 
     def execute
