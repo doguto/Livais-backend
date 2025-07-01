@@ -63,7 +63,7 @@ group :production do
   gem "mysql2", ">= 0.5.3"
 end
 
-gem "openai", "~> 0.5.0"
+gem "openai", "~> 0.11.0"
 
 gem "jwt", "~> 2.10"
 
