@@ -4,67 +4,35 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.2"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-# gem "jbuilder"
 
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[windows jruby]
-
-# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+# Alphabet sort
+gem "annotaterb"
+gem "bootsnap", require: false
+gem "dotenv-rails"
+gem "enumerize"
+gem 'google-id-token'
+gem "jwt", "~> 2.10"
+gem "kamal", require: false
+gem "openai", "~> 0.11.0"
+gem "rack-cors"
+gem "rubocop", require: false
+gem "ruby-lsp"
+gem "ruby-openai"
 gem "solid_cable"
 gem "solid_cache"
 gem "solid_queue"
-
-# Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
-
-# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", require: false
-
-# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
-
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-gem "rack-cors"
-
-gem "dotenv-rails"
-gem "ruby-lsp"
-gem "ruby-openai"
-
-gem "rubocop", require: false
-gem "annotaterb"
-
-gem "enumerize"
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
-
-  gem "sqlite3", "~> 2.6"
-
-  gem "faker"
-
   gem "bcrypt", "~> 3.1.7"
+  gem "brakeman", require: false
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "faker"
+  gem "rubocop-rails-omakase", require: false
+  gem "sqlite3", "~> 2.6"
 end
 
 group :production do
   gem "mysql2", ">= 0.5.3"
 end
-
-gem "openai", "~> 0.11.0"
-
-gem "jwt", "~> 2.10"
-
-gem 'google-id-token'
