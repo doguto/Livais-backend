@@ -28,6 +28,7 @@ jobs:
           ssh -i private_key -o StrictHostKeyChecking=no $USER_NAME@$HOST_NAME << 'EOF' 
             cd /var/www/Livais-backend
             git pull git@github.com:doguto/Livais-backend.git
+            bundle install
             chmod +x bin/rails
             RAILS_ENV=production bin/rails db:migrate
           EOF
