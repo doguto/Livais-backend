@@ -13,7 +13,7 @@ gem "enumerize"
 gem 'google-id-token'
 gem "jwt", "~> 2.10"
 gem "kamal", require: false
-gem "openai", "~> 0.5.0"
+gem "openai", "~> 0.11.0"
 gem "rack-cors"
 gem "rubocop", require: false
 gem "ruby-lsp"
