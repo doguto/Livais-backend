@@ -35,8 +35,13 @@ module LivaisBackend
 
     config.generators do |g|
       g.assets false
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
+      g.template_engine false
       g.skip_routes false
       g.test_framework false
+      g.fixture_replacement false
     end
   end
 end
