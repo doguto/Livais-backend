@@ -1,2 +1,2 @@
-module Page
+module Page::Page
 end
