@@ -1,2 +1,4 @@
-module Page::Page
+module Page
+  module Page
+  end
 end
