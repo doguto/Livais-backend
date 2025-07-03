@@ -1,7 +1,7 @@
 module ChatGptModule
   DEFAULT_USER_PROMPT = "あなたはツイッターのユーザーです。ポストに対し、100字以内で返信のツイートをしてください。丁寧語や敬語は不要。記号やマークダウン形式（**など）は使用しないで。".freeze
 
-  def chat(user_prompt:, system_prompt: DEFAULT_USER_PROMPT)
+  def get_gpt_response(user_prompt:, system_prompt: DEFAULT_USER_PROMPT)
     client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY", nil))
 
     response = client.chat(
