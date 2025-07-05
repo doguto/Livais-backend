@@ -18,9 +18,6 @@ gem "rack-cors"
 gem "rubocop", require: false
 gem "ruby-lsp"
 gem "ruby-openai"
-# gem "solid_cable"
-# gem "solid_cache"
-# gem "solid_queue"
 gem "thruster", require: false
 gem "tzinfo-data", platforms: %i[windows jruby]
 
