@@ -28,7 +28,7 @@ end
 puts "Seeding profiles..."
 users.each do |user|
   user.create_profile!(
-    bio: Faker::Lorem.paragraph(sentence_count: 2)
+    self_introduction: Faker::Lorem.paragraph(sentence_count: 2)
   )
 end
 
