@@ -11,7 +11,7 @@ gem "bootsnap", require: false
 gem "dotenv-rails"
 gem "enumerize"
 gem 'google-id-token'
-gem "jwt", "~> 2.10"
+gem "jwt", "~> 3.1"
 gem "kamal", require: false
 gem "openai", "~> 0.11.0"
 gem "rack-cors"
