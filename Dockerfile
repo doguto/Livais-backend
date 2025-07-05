@@ -12,8 +12,8 @@ ARG RUBY_VERSION=3.3.7
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 # make livais directory
-RUN mkdir Livais-backend
-WORKDIR /Livais-backend
+RUN mkdir livais-backend
+WORKDIR /livais-backend
 
 # Install base packages
 RUN apt-get update -qq && \
