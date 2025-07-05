@@ -1,0 +1,50 @@
+version: '8.2.5'
+
+environment:
+  WORK_DIR: /app/${DIP_WORK_DIR_REL_PATH}
+
+compose:
+  files:
+    - ./docker-compose.yml
+  project_name: livais-backend
+
+interaction:
+  bash:
+    description: Open a Bash shell
+    service: server
+    command: bash
+
+  bundle:
+    description: Run Bundler commands
+    service: server
+    command: bundle
+
+  rake:
+    description: Run Rake commands
+    service: server
+    command: bundle exec rake
+
+  rails:
+    description: Run Rails commands
+    service: server
+    command: bin/rails
+
+  rspec:
+    description: Run RSpec commands within test environment
+    service: server
+    environment:
+      RAILS_ENV: test
+    command: bundle exec rspec
+
+  rubocop:
+    description: Lint ruby files
+    service: server
+    command: bundle exec rubocop
+
+  mysql:
+    service: db
+    command: mysql -h db
+
+provision:
+  - dip compose down --volumes
+  - dip up
