@@ -279,8 +279,8 @@ GEM
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
     sorbet-runtime (0.5.12214)
-    sqlite3 (2.6.0-x64-mingw-ucrt)
-    sqlite3 (2.6.0-x86_64-linux-gnu)
+    sqlite3 (2.7.1-x64-mingw-ucrt)
+    sqlite3 (2.7.1-x86_64-linux-gnu)
     sshkit (1.24.0)
       base64
       logger
@@ -333,7 +333,7 @@ DEPENDENCIES
   rubocop-rails-omakase
   ruby-lsp
   ruby-openai
-  sqlite3 (~> 2.6)
+  sqlite3 (~> 2.7)
   thruster
   tzinfo-data
 
