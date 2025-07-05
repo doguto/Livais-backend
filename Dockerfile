@@ -39,7 +39,6 @@ RUN apt-get update -qq && \
     nodejs \
     default-mysql-client \
     libmariadb3 \
-    vim \
     && rm -rf /var/lib/apt/lists/*
 
 # Install application gems
