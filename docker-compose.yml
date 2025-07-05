@@ -5,7 +5,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       MYSQL_USER: ${DATABASE_USERNAME}
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_DATABASE: Livais_dev_db_1
+      MYSQL_DATABASE: Livais_dev_db
     ports:
       - "3306:3306"
     volumes:
