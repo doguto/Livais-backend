@@ -124,7 +124,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.10.2)
-    jwt (2.10.1)
+    jwt (3.1.2)
       base64
     kamal (2.5.3)
       activesupport (>= 7.0)
@@ -329,7 +329,7 @@ DEPENDENCIES
   enumerize
   faker
   google-id-token
-  jwt (~> 2.10)
+  jwt (~> 3.1)
   kamal
   mysql2 (>= 0.5.3)
   openai (~> 0.11.0)
