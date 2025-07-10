@@ -18,6 +18,8 @@ gem "rack-cors"
 gem "rubocop", require: false
 gem "ruby-lsp"
 gem "ruby-openai"
+gem "sentry-ruby"
+gem "sentry-rails"
 gem "thruster", require: false
 gem "tzinfo-data", platforms: %i[windows jruby]
 
