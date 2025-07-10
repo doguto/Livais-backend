@@ -29,7 +29,7 @@ group :development, :test do
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
   gem "faker"
   gem "rubocop-rails-omakase", require: false
-  gem "sqlite3", "~> 2.6"
+  gem "sqlite3", "~> 2.7"
 end
 
 group :production do

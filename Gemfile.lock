@@ -286,8 +286,8 @@ GEM
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     sorbet-runtime (0.5.12214)
-    sqlite3 (2.6.0-x64-mingw-ucrt)
-    sqlite3 (2.6.0-x86_64-linux-gnu)
+    sqlite3 (2.7.2-x64-mingw-ucrt)
+    sqlite3 (2.7.2-x86_64-linux-gnu)
     sshkit (1.24.0)
       base64
       logger
@@ -342,7 +342,7 @@ DEPENDENCIES
   ruby-openai
   sentry-rails
   sentry-ruby
-  sqlite3 (~> 2.6)
+  sqlite3 (~> 2.7)
   thruster
   tzinfo-data
 
