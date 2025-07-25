@@ -32,6 +32,14 @@ class User < ApplicationRecord
     following.pluck(:id).to_set
   end
 
+  def follow_count
+    following.count
+  end
+
+  def follower_count
+    followers.count
+  end
+
   private
 
   def password_required?
