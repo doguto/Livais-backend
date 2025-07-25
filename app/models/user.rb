@@ -54,8 +54,12 @@ class User < ApplicationRecord
     following.pluck(:id).to_set
   end
 
-  def create_notice_setting
-    NoticeSetting.create(user_id: id)
+  def follow_count
+    following.count
+  end
+
+  def follower_count
+    followers.count
   end
 
   private
