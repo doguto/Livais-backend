@@ -12,8 +12,8 @@ class ProfileDto
         cover_image: @user.profile&.cover_image,
         bio: @user.profile&.bio,
         join_date: @user.created_at.strftime("%Y-%m-%d"),
-        follow_count: @user.following.size,
-        follower_count: @user.followers.size
+        follow_count: @user.follow_count,
+        follower_count: @user.follower_count
       }.camelize
     }.camelize
   end
