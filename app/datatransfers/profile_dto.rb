@@ -10,7 +10,7 @@ class ProfileDto
         name: @user.name,
         image: @user.image,
         cover_image: @user.profile&.cover_image,
-        bio: @user.profile&.bio,
+        self_introduction: @user.profile&.self_introduction,
         join_date: @user.created_at.strftime("%Y-%m-%d"),
         follow_count: @user.follow_count,
         follower_count: @user.follower_count
