@@ -45,7 +45,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_23_064825) do
   end
 
   create_table "notice_settings", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.boolean "like_enable", default: true, null: false
     t.boolean "repost_enable", default: true, null: false
     t.boolean "quote_enable", default: true, null: false
@@ -63,6 +63,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_23_064825) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_hide", default: false, null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notices_on_notifiable"
     t.index ["user_id"], name: "index_notices_on_user_id"
   end
 
@@ -132,6 +133,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_23_064825) do
   add_foreign_key "ai_users", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "notice_settings", "users"
   add_foreign_key "notices", "users"
   add_foreign_key "posts", "posts", column: "quoted_post_id"
   add_foreign_key "posts", "posts", column: "reply_to_id"

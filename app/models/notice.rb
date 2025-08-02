@@ -12,7 +12,8 @@
 #
 # Indexes
 #
-#  index_notices_on_user_id  (user_id)
+#  index_notices_on_notifiable  (notifiable_type,notifiable_id)
+#  index_notices_on_user_id     (user_id)
 #
 # Foreign Keys
 #
