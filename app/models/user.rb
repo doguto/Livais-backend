@@ -3,17 +3,18 @@
 # Table name: users
 #
 #  id              :integer          not null, primary key
-#  created_at      :datetime         not null
-#  name            :string
 #  email           :string           not null
 #  image           :string
+#  name            :string
 #  password_digest :string
 #  provider        :string
 #  uid             :string
+#  created_at      :datetime         not null
 #
 # Indexes
 #
-#  index_users_on_email  (email) UNIQUE
+#  index_users_on_email             (email) UNIQUE
+#  index_users_on_uid_and_provider  (uid,provider) UNIQUE
 #
 
 class User < ApplicationRecord
@@ -56,6 +57,16 @@ class User < ApplicationRecord
 
   def create_notice_setting
     NoticeSetting.create(user_id: id)
+  end
+
+  def self.from_omniauth(auth)
+    where(uid: auth.uid, provider: auth.provider).first_or_create do |user|
+      user.email = auth.info.email
+      user.name = auth.info.name
+      user.image = auth.info.image
+      user.provider = auth.provider
+      user.uid = auth.uid
+    end
   end
 
   private
