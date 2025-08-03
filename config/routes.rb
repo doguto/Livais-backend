@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   # OAuth routes (outside of API scope)
   get "/auth/:provider/callback", to: "sessions#omniauth"
-  
+
   scope path: "/api/v1" do
     resources :posts, only: [:index, :show, :create] do
       resources :replies, only: [:create], module: :posts

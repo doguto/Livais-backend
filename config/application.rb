@@ -32,9 +32,9 @@ module LivaisBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-    
+
     # Minimal session support for OmniAuth only
-    config.middleware.use ActionDispatch::Session::CookieStore, key: '_livais_session', same_site: :nil, secure: false, httponly: true
+    config.middleware.use ActionDispatch::Session::CookieStore, key: "_livais_session", same_site: :nil, secure: false, httponly: true
 
     config.generators do |g|
       g.assets false
