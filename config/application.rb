@@ -34,6 +34,8 @@ module LivaisBackend
     config.api_only = true
 
     # Minimal session support for OmniAuth only
+
+    # TODO: https以外でcookieを送信しないようにするため、secure: trueを設定 (https://github.com/doguto/Livais-backend/issues/211)
     config.middleware.use ActionDispatch::Session::CookieStore, key: "_livais_session", same_site: :nil, secure: false, httponly: true
 
     config.generators do |g|

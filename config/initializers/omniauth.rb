@@ -3,6 +3,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            ENV.fetch("GITHUB_CLIENT_ID", nil),
            ENV.fetch("GITHUB_CLIENT_SECRET", nil),
            scope: "user:email,read:user",
+           # TODO: 適切にstate検証を実現する (https://github.com/doguto/Livais-backend/issues/210)
            provider_ignores_state: true
 end
 

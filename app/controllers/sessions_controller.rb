@@ -4,10 +4,9 @@ class SessionsController < ApplicationController
     user = User.from_omniauth(auth)
 
     if user.persisted?
-      # JWTトークン生成
       token = JsonWebToken.encode(user_id: user.id)
 
-      # フロントエンドにトークンをクエリパラメータで渡す
+      # TODO: クエリパラメータではなくcookieにトークンを保存するようにする (https://github.com/doguto/Livais-backend/issues/198)
       redirect_to "#{ENV.fetch('FRONTEND_URL', 'http://localhost:3001')}/auth/callback?token=#{token}",
                   allow_other_host: true
     else
