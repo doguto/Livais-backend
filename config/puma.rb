@@ -45,7 +45,7 @@ if Rails.env.development?
   cert_file = Rails.root.join("config", "certs", "localhost.cert")
 
   unless key_file.exist?
-    root_key = OpenSSL::PKey::RSA.new(2048)
+    root_key = OpenSSL::PKey::RSA.new(4096)
     key_file.write(root_key)
 
     root_cert = OpenSSL::X509::Certificate.new.tap do |root_ca|
