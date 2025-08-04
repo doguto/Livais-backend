@@ -50,6 +50,7 @@ jobs:
       DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       DATABASE_USERNAME: ${{ secrets.DATABASE_USER_NAME }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
     
     steps:
       - name: Install packages
