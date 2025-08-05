@@ -13,6 +13,8 @@ gem "enumerize"
 gem 'google-id-token'
 gem "jwt", "~> 2.10"
 gem "kamal", require: false
+gem "omniauth", "~> 2.1"
+gem "omniauth-github", "~> 2.0"
 gem "openai", "~> 0.11.0"
 gem "rack-cors"
 gem "rubocop", require: false

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # OAuth routes (outside of API scope)
+  get "/auth/:provider/callback", to: "oauth#callback"
+
   scope path: "/api/v1" do
     resources :posts, only: [:index, :show, :create] do
       resources :replies, only: [:create], module: :posts
@@ -31,6 +34,7 @@ Rails.application.routes.draw do
     post "auth/google", to: "auth#google"
 
     get "auth/me", to: "auth#me"
+    delete "logout", to: "oauth#destroy"
 
     get "notice/", to: "notice#index"
     post "notice/:notice_id", to: "notice#hide"
