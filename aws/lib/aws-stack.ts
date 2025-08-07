@@ -23,6 +23,11 @@ export class AwsStack extends cdk.Stack {
         serverSecurityGroup.connections.allowFromAnyIpv4(ec2.Port.tcp(22))   // SSHの許可
         serverSecurityGroup.connections.allowFromAnyIpv4(ec2.Port.tcp(443))  // Httpsの許可
 
+        const databaseSecurityGroup = new ec2.SecurityGroup(this, 'DevDatabaseSecurityGroup', {
+            vpc
+        })
+        serverSecurityGroup.connections.allowFrom(serverSecurityGroup, ec2.Port.tcp(3306))  // EC2からMySQLへのアクセスを許可
+
         // EC2 Instance
         const devServer = new ec2.Instance(this, 'DevServer', {
             vpc,
@@ -39,6 +44,10 @@ export class AwsStack extends cdk.Stack {
                 storePublicKey: true
             }),
             instanceName: 'DevServer'
+        })
+
+        const elasticIp = new ec2.CfnEIP(this, 'DevServerElasticIp', {
+            instanceId: devServer.instanceId,
         })
 
         // CloudFormationへの出力
