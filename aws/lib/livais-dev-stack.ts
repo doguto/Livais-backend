@@ -6,6 +6,7 @@ import * as rds from 'aws-cdk-lib/aws-rds';
 import { KeyPair } from "cdk-ec2-key-pair";
 import dotenv from 'dotenv';
 import * as path from "node:path";
+import { readFileSync } from "fs";
 
 
 export class LivaisDevStack extends cdk.Stack {
@@ -68,6 +69,9 @@ export class LivaisDevStack extends cdk.Stack {
             }),
             instanceName: serverName
         })
+
+        const setupScript = readFileSync('./lib/resources/setup-dev.sh', 'utf-8')
+        devServer.addUserData(setupScript)
 
         // ElasticIPをEC2に設定
         new ec2.CfnEIP(this, 'DevServerElasticIp', {
