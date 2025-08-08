@@ -44,6 +44,7 @@ export class LivaisDevStack extends cdk.Stack {
             vpc
         })
         serverSecurityGroup.connections.allowFromAnyIpv4(ec2.Port.tcp(22))   // SSHの許可
+        serverSecurityGroup.connections.allowFromAnyIpv4(ec2.Port.tcp(80))   // Httpの許可
         serverSecurityGroup.connections.allowFromAnyIpv4(ec2.Port.tcp(443))  // Httpsの許可
 
         const databaseSecurityGroup = new ec2.SecurityGroup(this, 'DevDatabaseSecurityGroup', {
