@@ -61,7 +61,8 @@ export class LivaisDevStack extends cdk.Stack {
             instanceName: 'DevServer'
         })
 
-        const elasticIp = new ec2.CfnEIP(this, 'DevServerElasticIp', {
+        // ElasticIPをEC2に設定
+        new ec2.CfnEIP(this, 'DevServerElasticIp', {
             instanceId: devServer.instanceId,
         })
 
