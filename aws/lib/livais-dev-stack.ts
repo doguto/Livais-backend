@@ -1,14 +1,17 @@
 import * as cdk from 'aws-cdk-lib';
-import { CfnOutput } from 'aws-cdk-lib'
-import { Application } from "aws-cdk-lib/aws-appconfig";
+import { CfnOutput, SecretValue } from 'aws-cdk-lib'
 import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as rds from 'aws-cdk-lib/aws-rds';
 import { KeyPair } from "cdk-ec2-key-pair";
+import dotenv from 'dotenv';
+import * as path from "node:path";
 
 
 export class LivaisDevStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-        super(scope, id, props);
+        super(scope, id, props)
+        dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
         // VPC
         // publicSubnet, privateSubnetを各AZに1つずつ作成
@@ -44,7 +47,8 @@ export class LivaisDevStack extends cdk.Stack {
         serverSecurityGroup.connections.allowFrom(serverSecurityGroup, ec2.Port.tcp(3306))  // EC2からMySQLへのアクセスを許可
 
         // EC2 Instance
-        const devServer = new ec2.Instance(this, 'DevServer', {
+        const serverName = 'DevServer'
+        const devServer = new ec2.Instance(this, serverName, {
             vpc,
             vpcSubnets: vpc.selectSubnets({
                 subnetType: ec2.SubnetType.PUBLIC,
@@ -58,7 +62,7 @@ export class LivaisDevStack extends cdk.Stack {
                 keyPairName: 'DevServerSshKey',
                 storePublicKey: true
             }),
-            instanceName: 'DevServer'
+            instanceName: serverName
         })
 
         // ElasticIPをEC2に設定
@@ -66,9 +70,31 @@ export class LivaisDevStack extends cdk.Stack {
             instanceId: devServer.instanceId,
         })
 
+        // RDS
+        const databaseName = 'DevDatabase'
+        const devDatabase = new rds.DatabaseInstance(this, databaseName, {
+            vpc,
+            vpcSubnets: vpc.selectSubnets({
+                subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+            }),
+            engine: rds.DatabaseInstanceEngine.mysql({
+                version: rds.MysqlEngineVersion.VER_8_0_41,
+            }),
+            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MICRO),  // 無料枠: t4g.micro
+            securityGroups: [databaseSecurityGroup],
+            credentials: rds.Credentials.fromUsername(process.env.DATABASE_USERNAME as string, {
+                password: SecretValue.unsafePlainText(process.env.DATABASE_PASSWORD as string),
+            }),
+            instanceIdentifier: databaseName,
+            databaseName: databaseName,
+        })
+        devDatabase.connections.allowDefaultPortFrom(devServer)
+
         // CloudFormationへの出力
         new CfnOutput(this, 'VPC', { value: vpc.vpcId })
-        new CfnOutput(this, 'Security Group', { value: serverSecurityGroup.securityGroupId })
+        new CfnOutput(this, 'Security Group for EC2', { value: serverSecurityGroup.securityGroupId })
+        new CfnOutput(this, 'Security Group for RDS', { value: databaseSecurityGroup.securityGroupId })
         new CfnOutput(this, 'EC2', { value: devServer.instanceId })
+        new CfnOutput(this, 'RDS', { value: devDatabase.instanceIdentifier })
     }
 }
