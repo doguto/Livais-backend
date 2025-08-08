@@ -1,5 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { CfnOutput } from 'aws-cdk-lib'
+import { Application } from "aws-cdk-lib/aws-appconfig";
 import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import { KeyPair } from "cdk-ec2-key-pair";
@@ -13,6 +14,19 @@ export class AwsStack extends cdk.Stack {
         // publicSubnet, privateSubnetを各AZに1つずつ作成
         const vpc = new ec2.Vpc(this, 'DevVpc', {
             ipAddresses: ec2.IpAddresses.cidr('10.0.0.0/16'),
+            natGateways: 0,
+            subnetConfiguration: [
+                {
+                    cidrMask: 24,
+                    name: 'PublicSubnet',
+                    subnetType: ec2.SubnetType.PUBLIC,
+                },
+                {
+                    cidrMask: 24,
+                    name: 'PrivateSubnet',
+                    subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+                },
+            ],
             vpcName: 'DevVpc',
         })
 
