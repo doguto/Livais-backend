@@ -13,11 +13,14 @@ export class LivaisDevStack extends cdk.Stack {
         super(scope, id, props)
         dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
+        // AvailabilityZone
+        const availabilityZoneNames = ['ap-northeast-1a', 'ap-northeast-1c']
+        
         // VPC
         // publicSubnet, privateSubnetを各AZに1つずつ作成
         const vpc = new ec2.Vpc(this, 'DevVpc', {
             ipAddresses: ec2.IpAddresses.cidr('10.0.0.0/16'),
-            maxAzs: 1, // AZは1つのみ
+            availabilityZones: availabilityZoneNames,
             natGateways: 0,
             subnetConfiguration: [
                 {
@@ -52,6 +55,7 @@ export class LivaisDevStack extends cdk.Stack {
             vpc,
             vpcSubnets: vpc.selectSubnets({
                 subnetType: ec2.SubnetType.PUBLIC,
+                availabilityZones: [availabilityZoneNames[0]],  // EC2を2つ作成しないようにAZで絞り込み
             }),
             instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO),  // 無料枠: t2.micro
             machineImage: new ec2.AmazonLinuxImage({
