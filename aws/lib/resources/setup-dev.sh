@@ -1,9 +1,9 @@
 #!/bin/bash
 
-sudo yum -y update
+yum -y update
 
 # install dependencies
-sudo yum -y install \
+yum -y install \
 git make gcc-c++ patch curl openssl-devel \
 libcurl-devel libyaml-devel libffi-devel libicu-devel \
 libxml2 libxslt libxml2-devel libxslt-devel \
@@ -11,8 +11,8 @@ zlib-devel readline-devel mysql mysql-server mysql-devel \
 mysql mysql-server mysql-devel epel-release
 
 # install nodejs
-curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash
-sudo yum install -y nodejs
+curl -sL https://rpm.nodesource.com/setup_14.x | bash
+yum install -y nodejs
 if which node > /dev/null 2>&1; then
     echo "Succeeded in installing Node.js."
 else
@@ -21,8 +21,8 @@ else
 fi
 
 # install yarn
-curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-sudo yum -y install yarn
+curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+yum -y install yarn
 
 # install rbenv
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -44,4 +44,4 @@ else
 fi
 
 # install Nginx
-sudo amazon-linux-extras install nginx1
+amazon-linux-extras install nginx1
