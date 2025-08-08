@@ -15,7 +15,7 @@ export class LivaisDevStack extends cdk.Stack {
 
         // AvailabilityZone
         const availabilityZoneNames = ['ap-northeast-1a', 'ap-northeast-1c']
-        
+
         // VPC
         // publicSubnet, privateSubnetを各AZに1つずつ作成
         const vpc = new ec2.Vpc(this, 'DevVpc', {
@@ -90,7 +90,7 @@ export class LivaisDevStack extends cdk.Stack {
             maxAllocatedStorage: 20,  // 無料枠: 最大20GB
             securityGroups: [databaseSecurityGroup],
             credentials: rds.Credentials.fromUsername(process.env.DATABASE_USERNAME as string, {
-                password: SecretValue.secretsManager(process.env.DATABASE_PASSWORD as string),
+                password: SecretValue.unsafePlainText(process.env.DATABASE_PASSWORD as string),
             }),
             instanceIdentifier: databaseName,
             databaseName: databaseName,
