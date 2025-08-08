@@ -19,7 +19,8 @@ export class LivaisDevStack extends cdk.Stack {
 
         // VPC
         // publicSubnet, privateSubnetを各AZに1つずつ作成
-        const vpc = new ec2.Vpc(this, 'DevVpc', {
+        const vpcName = 'DevVpc'
+        const vpc = new ec2.Vpc(this, vpcName, {
             ipAddresses: ec2.IpAddresses.cidr('10.0.0.0/16'),
             availabilityZones: availabilityZoneNames,
             natGateways: 0,
@@ -35,7 +36,7 @@ export class LivaisDevStack extends cdk.Stack {
                     subnetType: ec2.SubnetType.PRIVATE_ISOLATED,  // NATゲート無し
                 },
             ],
-            vpcName: 'DevVpc',
+            vpcName: vpcName,
         })
 
         // Security Group
