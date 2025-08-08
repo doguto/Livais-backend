@@ -81,6 +81,9 @@ export class LivaisDevStack extends cdk.Stack {
                 version: rds.MysqlEngineVersion.VER_8_0_41,
             }),
             instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MICRO),  // 無料枠: t4g.micro
+            multiAz: false,           // 無料枠: AZ1つ
+            allocatedStorage: 20,     // 無料枠: 最大20GB
+            maxAllocatedStorage: 20,  // 無料枠: 最大20GB
             securityGroups: [databaseSecurityGroup],
             credentials: rds.Credentials.fromUsername(process.env.DATABASE_USERNAME as string, {
                 password: SecretValue.unsafePlainText(process.env.DATABASE_PASSWORD as string),
