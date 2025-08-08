@@ -6,7 +6,7 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import { KeyPair } from "cdk-ec2-key-pair";
 
 
-export class AwsStack extends cdk.Stack {
+export class LivaisDevStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
@@ -14,6 +14,7 @@ export class AwsStack extends cdk.Stack {
         // publicSubnet, privateSubnetを各AZに1つずつ作成
         const vpc = new ec2.Vpc(this, 'DevVpc', {
             ipAddresses: ec2.IpAddresses.cidr('10.0.0.0/16'),
+            maxAzs: 1, // AZは1つのみ
             natGateways: 0,
             subnetConfiguration: [
                 {
@@ -24,7 +25,7 @@ export class AwsStack extends cdk.Stack {
                 {
                     cidrMask: 24,
                     name: 'PrivateSubnet',
-                    subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+                    subnetType: ec2.SubnetType.PRIVATE_ISOLATED,  // NATゲート無し
                 },
             ],
             vpcName: 'DevVpc',
@@ -48,7 +49,7 @@ export class AwsStack extends cdk.Stack {
             vpcSubnets: vpc.selectSubnets({
                 subnetType: ec2.SubnetType.PUBLIC,
             }),
-            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO), // 無料枠: t2.micro
+            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO),  // 無料枠: t2.micro
             machineImage: new ec2.AmazonLinuxImage({
                 generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
             }),
