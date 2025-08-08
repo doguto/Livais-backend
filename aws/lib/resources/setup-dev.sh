@@ -42,3 +42,6 @@ else
     echo "Failed to install Ruby."
     exit 1
 fi
+
+# install Nginx
+sudo amazon-linux-extras install nginx1
