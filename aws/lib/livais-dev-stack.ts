@@ -44,7 +44,7 @@ export class LivaisDevStack extends cdk.Stack {
         const databaseSecurityGroup = new ec2.SecurityGroup(this, 'DevDatabaseSecurityGroup', {
             vpc
         })
-        serverSecurityGroup.connections.allowFrom(serverSecurityGroup, ec2.Port.tcp(3306))  // EC2からMySQLへのアクセスを許可
+        databaseSecurityGroup.connections.allowFrom(serverSecurityGroup, ec2.Port.tcp(3306))  // EC2からMySQLへのアクセスを許可
 
         // EC2 Instance
         const serverName = 'DevServer'
