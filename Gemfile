@@ -7,6 +7,7 @@ gem "puma", ">= 5.0"
 
 # Alphabet sort
 gem "annotaterb"
+gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "dotenv-rails"
 gem "enumerize"
@@ -26,7 +27,6 @@ gem "thruster", require: false
 gem "tzinfo-data", platforms: %i[windows jruby]
 
 group :development, :test do
-  gem "bcrypt", "~> 3.1.7"
   gem "brakeman", require: false
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
   gem "faker"
