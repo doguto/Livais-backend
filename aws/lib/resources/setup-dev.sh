@@ -7,8 +7,8 @@ yum -y install \
 git make gcc-c++ patch curl openssl-devel \
 libcurl-devel libyaml-devel libffi-devel libicu-devel \
 libxml2 libxslt libxml2-devel libxslt-devel \
-zlib-devel readline-devel mysql mysql-server mysql-devel \
-mysql mysql-server mysql-devel epel-release
+zlib-devel readline-devel mysql \
+mysql-server mysql-devel epel-release
 
 # install nodejs
 curl -sL https://rpm.nodesource.com/setup_14.x | bash
