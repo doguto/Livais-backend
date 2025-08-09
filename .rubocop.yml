@@ -13,6 +13,7 @@ AllCops:
   # rubocop対象外(リポジトリ毎で調節)
   Exclude:
     - "Gemfile"
+    - "aws/**/*"
     - "bin/**/*"
     - "db/**/*"
     - "log/**/*"
