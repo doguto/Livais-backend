@@ -7,6 +7,7 @@ import { KeyPair } from "cdk-ec2-key-pair";
 import dotenv from 'dotenv';
 import * as path from "node:path";
 import { readFileSync } from "fs";
+import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 
 
 export class LivaisDevStack extends cdk.Stack {
@@ -15,6 +16,7 @@ export class LivaisDevStack extends cdk.Stack {
         dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
         // AvailabilityZone
+        const appRegion = 'ap-northeast-1'
         const availabilityZoneNames = ['ap-northeast-1a', 'ap-northeast-1c']
 
         // VPC
@@ -78,6 +80,18 @@ export class LivaisDevStack extends cdk.Stack {
         // ElasticIPをEC2に設定
         new ec2.CfnEIP(this, 'DevServerElasticIp', {
             instanceId: devServer.instanceId,
+        })
+
+        // Route53
+        const hostZone = HostedZone.fromLookup(this, 'DevServerZone', {
+            domainName: 'livais-api.com'
+        })
+
+        new ARecord(this, "DevServerARecord", {
+            target: RecordTarget.fromIpAddresses(process.env.DEV_EC2_IP as string),
+            zone: hostZone,
+            recordName: "DevServerRecord",
+            region: appRegion,
         })
 
         // RDS
