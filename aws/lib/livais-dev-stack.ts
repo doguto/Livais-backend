@@ -17,7 +17,7 @@ export class LivaisDevStack extends cdk.Stack {
 
         // AvailabilityZone
         const appRegion = 'ap-northeast-1'
-        const availabilityZoneNames = ['ap-northeast-1a', 'ap-northeast-1c']
+        const availabilityZoneNames = [`${appRegion}a`, `${appRegion}c`]
 
         // VPC
         // publicSubnet, privateSubnetを各AZに1つずつ作成
