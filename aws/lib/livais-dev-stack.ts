@@ -78,7 +78,7 @@ export class LivaisDevStack extends cdk.Stack {
         // devServer.addUserData(setupScript)
 
         // ElasticIPをEC2に設定
-        new ec2.CfnEIP(this, 'DevServerElasticIp', {
+        const devServerEip = new ec2.CfnEIP(this, 'DevServerElasticIp', {
             instanceId: devServer.instanceId,
         })
 
@@ -88,7 +88,7 @@ export class LivaisDevStack extends cdk.Stack {
         })
 
         new ARecord(this, "DevServerARecord", {
-            target: RecordTarget.fromIpAddresses(process.env.DEV_EC2_IP as string),
+            target: RecordTarget.fromIpAddresses(devServerEip.ref),
             zone: hostZone,
             recordName: "dev",
             region: appRegion,
