@@ -17,7 +17,7 @@ export class LivaisDevStack extends cdk.Stack {
 
         // AvailabilityZone
         const appRegion = 'ap-northeast-1'
-        const availabilityZoneNames = [`${appRegion}a`, `${appRegion}c`]
+        const availabilityZoneNames = [`${ appRegion }a`, `${ appRegion }c`]
 
         // VPC
         // publicSubnet, privateSubnetを各AZに1つずつ作成
@@ -91,7 +91,6 @@ export class LivaisDevStack extends cdk.Stack {
             target: RecordTarget.fromIpAddresses(devServerEip.ref),
             zone: hostZone,
             recordName: "dev",
-            region: appRegion,
         })
 
         // RDS
