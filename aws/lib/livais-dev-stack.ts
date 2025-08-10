@@ -4,16 +4,13 @@ import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as rds from 'aws-cdk-lib/aws-rds';
 import { KeyPair } from "cdk-ec2-key-pair";
-import dotenv from 'dotenv';
 import * as path from "node:path";
-import { readFileSync } from "fs";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 
 
 export class LivaisDevStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props)
-        dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
         // AvailabilityZone
         const appRegion = 'ap-northeast-1'
