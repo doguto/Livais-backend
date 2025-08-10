@@ -90,7 +90,7 @@ export class LivaisDevStack extends cdk.Stack {
         new ARecord(this, "DevServerARecord", {
             target: RecordTarget.fromIpAddresses(process.env.DEV_EC2_IP as string),
             zone: hostZone,
-            recordName: "DevServerRecord",
+            recordName: "dev",
             region: appRegion,
         })
 
