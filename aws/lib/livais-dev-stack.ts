@@ -84,7 +84,7 @@ export class LivaisDevStack extends cdk.Stack {
 
         // Route53
         const hostZone = HostedZone.fromLookup(this, 'DevServerZone', {
-            domainName: 'livais-api.com'
+            domainName: process.env.DOMAIN_NAME as string,
         })
 
         new ARecord(this, "DevServerARecord", {
