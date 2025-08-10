@@ -61,11 +61,19 @@ if Rails.env.development?
     cert_file.write(root_cert)
   end
 
-  ssl_bind "127.0.0.1", "3000", {
+  ssl_bind "*********", "3000", {
     key: key_file.to_path,
     cert: cert_file.to_path
   }
 elsif Rails.env.production?
-  bind "unix:///var/www/Livais-backend/tmp/sockets/puma.sock"
-end
+  app_directory = '/var/www/Livais-backend'
+  directory app_directory
+  rackup "#{app_directory}/config.ru"
+  environment 'production'
 
+  bind "unix:///var/www/Livais-backend/tmp/sockets/puma.sock"
+
+  pidfile "#{app_directory}/tmp/pids/puma.pid"
+  state_path "#{app_directory}/tmp/pids/puma.state"
+  stdout_redirect "#{app_directory}/log/puma.stdout.log", "#{app_directory}/log/puma.stderr.log", true
+end

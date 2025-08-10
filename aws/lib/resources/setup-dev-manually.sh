@@ -70,9 +70,7 @@ cd /etc/nginx/conf.d
 sudo vi ***.conf  # paste nginx.conf
 sudo nginx -t   # 設定チェック
 sudo systemctl reload nginx
+# 設定を変更したら直上2行を都度実行
 
-# setup puma.sock
-mkdir -p /var/www/Livais-backend/tmp/sockets
-chown -R ec2-user:ec2-user /var/www/Livais-backend/tmp
-chmod 755 /var/www/Livais-backend/tmp/socketschown -R ec2-user:ec2-user /var/www/Livais-backend/tmp
-                                             chmod 755 /var/www/Livais-backend/tmp/sockets
+# 以上で完了
+RAILS_ENV=production rails s -b 0.0.0.0 -p 3000  # 実行して確認
