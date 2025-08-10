@@ -74,8 +74,8 @@ export class LivaisDevStack extends cdk.Stack {
             instanceName: serverName
         })
 
-        const setupScript = readFileSync('./lib/resources/setup-dev.sh', 'utf-8')
-        devServer.addUserData(setupScript)
+        // const setupScript = readFileSync('./lib/resources/setup-dev.sh', 'utf-8')
+        // devServer.addUserData(setupScript)
 
         // ElasticIPをEC2に設定
         new ec2.CfnEIP(this, 'DevServerElasticIp', {
