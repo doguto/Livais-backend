@@ -63,10 +63,21 @@ bundle install --without development test
 rails db:create RAILS_ENV=production
 rails db:migrate RAILS_ENV=production
 
-# install nginx
+# install Nginx
 sudo amazon-linux-extras install nginx1
 sudo systemctl start nginx
 cd /etc/nginx/conf.d
-sudo vi ***.conf
+sudo vi ***.conf  # paste nginx.conf
+sudo nginx -t   # 設定チェック
+sudo systemctl reload nginx
+# 設定を変更したら直上2行を都度実行
 
-#
+# 以上で完了
+RAILS_ENV=production rails s -b 0.0.0.0 -p 3000  # 実行して確認
+
+# setup daemon service
+sudo mkdir -p /etc/systemd/system/
+sudo touch livais-api.service
+sudo systemctl daemon-reload
+sudo systemctl enable livais-api
+sudo systemctl start livais-api

@@ -79,4 +79,3 @@ elsif env == "server"
   state_path "#{app_directory}/tmp/pids/puma.state"
   stdout_redirect "#{app_directory}/log/puma.stdout.log", "#{app_directory}/log/puma.stderr.log", true
 end
-
