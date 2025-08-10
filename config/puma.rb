@@ -65,5 +65,7 @@ if Rails.env.development?
     key: key_file.to_path,
     cert: cert_file.to_path
   }
+elsif Rails.env.production?
+  bind "unix:///var/www/Livais-backend/tmp/sockets/puma.sock"
 end
 

@@ -63,10 +63,16 @@ bundle install --without development test
 rails db:create RAILS_ENV=production
 rails db:migrate RAILS_ENV=production
 
-# install nginx
+# install Nginx
 sudo amazon-linux-extras install nginx1
 sudo systemctl start nginx
 cd /etc/nginx/conf.d
-sudo vi ***.conf
+sudo vi ***.conf  # paste nginx.conf
+sudo nginx -t   # 設定チェック
+sudo systemctl reload nginx
 
-#
+# setup puma.sock
+mkdir -p /var/www/Livais-backend/tmp/sockets
+chown -R ec2-user:ec2-user /var/www/Livais-backend/tmp
+chmod 755 /var/www/Livais-backend/tmp/socketschown -R ec2-user:ec2-user /var/www/Livais-backend/tmp
+                                             chmod 755 /var/www/Livais-backend/tmp/sockets
