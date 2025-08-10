@@ -40,7 +40,9 @@ plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 
-if Rails.env.development?
+env = ENV.fetch("SERVER_ENV", "local")
+
+if env == "local"
   key_file = Rails.root.join("config", "certs", "localhost.key")
   cert_file = Rails.root.join("config", "certs", "localhost.cert")
 
@@ -65,13 +67,13 @@ if Rails.env.development?
     key: key_file.to_path,
     cert: cert_file.to_path
   }
-elsif Rails.env.production?
-  app_directory = ENV.fetch('EC2_APP_DIR', '/var/www/Livais-backend')
+elsif env == "server"
+  app_directory = ENV.fetch("EC2_APP_DIR", "/var/www/Livais-backend")
   directory app_directory
   rackup "#{app_directory}/config.ru"
-  environment 'production'
+  environment "production"
 
-  bind "unix:///var/www/Livais-backend/tmp/sockets/puma.sock"
+  bind "unix://#{app_directory}/tmp/sockets/puma.sock"
 
   pidfile "#{app_directory}/tmp/pids/puma.pid"
   state_path "#{app_directory}/tmp/pids/puma.state"
