@@ -1,0 +1,14 @@
+[Unit]
+Description=Livais Rails API Server
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/var/www/Livais-backend
+ExecStart=/home/ec2-user/.rbenv/shims/bundle exec puma -C config/puma.rb -e production
+Restart=always
+Environment=RAILS_ENV=production
+
+[Install]
+WantedBy=multi-user.target
