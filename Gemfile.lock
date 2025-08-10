@@ -151,6 +151,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (5.25.5)
     msgpack (1.8.0)
     multi_xml (0.7.2)
@@ -174,6 +175,9 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.4)
+    nokogiri (1.18.8)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.18.8-x64-mingw-ucrt)
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-linux-gnu)
@@ -314,6 +318,8 @@ GEM
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
     sorbet-runtime (0.5.12214)
+    sqlite3 (2.6.0)
+      mini_portile2 (~> 2.8.0)
     sqlite3 (2.6.0-x64-mingw-ucrt)
     sqlite3 (2.6.0-x86_64-linux-gnu)
     sshkit (1.24.0)
@@ -345,6 +351,7 @@ GEM
     zeitwerk (2.7.2)
 
 PLATFORMS
+  ruby
   x64-mingw-ucrt
   x86_64-linux
 
