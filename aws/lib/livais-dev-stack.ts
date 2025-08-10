@@ -4,18 +4,17 @@ import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as rds from 'aws-cdk-lib/aws-rds';
 import { KeyPair } from "cdk-ec2-key-pair";
-import dotenv from 'dotenv';
 import * as path from "node:path";
-import { readFileSync } from "fs";
+import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 
 
 export class LivaisDevStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props)
-        dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
         // AvailabilityZone
-        const availabilityZoneNames = ['ap-northeast-1a', 'ap-northeast-1c']
+        const appRegion = 'ap-northeast-1'
+        const availabilityZoneNames = [`${appRegion}a`, `${appRegion}c`]
 
         // VPC
         // publicSubnet, privateSubnetを各AZに1つずつ作成
@@ -72,12 +71,24 @@ export class LivaisDevStack extends cdk.Stack {
             instanceName: serverName
         })
 
-        const setupScript = readFileSync('./lib/resources/setup-dev.sh', 'utf-8')
-        devServer.addUserData(setupScript)
+        // const setupScript = readFileSync('./lib/resources/setup-dev.sh', 'utf-8')
+        // devServer.addUserData(setupScript)
 
         // ElasticIPをEC2に設定
-        new ec2.CfnEIP(this, 'DevServerElasticIp', {
+        const devServerEip = new ec2.CfnEIP(this, 'DevServerElasticIp', {
             instanceId: devServer.instanceId,
+        })
+
+        // Route53
+        const hostZone = HostedZone.fromLookup(this, 'DevServerZone', {
+            domainName: process.env.DOMAIN_NAME as string,
+        })
+
+        new ARecord(this, "DevServerARecord", {
+            target: RecordTarget.fromIpAddresses(devServerEip.ref),
+            zone: hostZone,
+            recordName: "dev",
+            region: appRegion,
         })
 
         // RDS
