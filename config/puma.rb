@@ -1,3 +1,7 @@
+require 'pathname'
+require 'openssl'
+require 'dotenv/load'
+
 # This configuration file will be evaluated by Puma. The top-level methods that
 # are invoked here are part of Puma's configuration DSL. For more information
 # about methods provided by the DSL, see https://puma.io/puma/Puma/DSL.html.
@@ -43,8 +47,10 @@ pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 env = ENV.fetch("SERVER_ENV", "local")
 
 if env == "local"
-  key_file = Rails.root.join("config", "certs", "localhost.key")
-  cert_file = Rails.root.join("config", "certs", "localhost.cert")
+  app_root = Pathname.new(File.expand_path(__dir__))
+
+  key_file = app_root.join("certs", "localhost.key")
+  cert_file = app_root.join("certs", "localhost.cert")
 
   unless key_file.exist?
     root_key = OpenSSL::PKey::RSA.new(4096)
@@ -57,7 +63,7 @@ if env == "local"
       root_ca.issuer = root_ca.subject # root CA"s are "self-signed"
       root_ca.public_key = root_key.public_key
       root_ca.not_before = Time.now
-      root_ca.not_after = root_ca.not_before + 2.years # 2 years validity
+      root_ca.not_after = root_ca.not_before + 2 * 365 * 24 * 60 * 60  # 2 years validity
       root_ca.sign(root_key, OpenSSL::Digest::SHA256.new)
     end
     cert_file.write(root_cert)
