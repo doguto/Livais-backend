@@ -77,7 +77,7 @@ RAILS_ENV=production rails s -b 0.0.0.0 -p 3000  # 実行して確認
 
 # setup daemon service
 sudo mkdir -p /etc/systemd/system/
-touch livais-api.service
+sudo touch livais-api.service
 sudo systemctl daemon-reload
 sudo systemctl enable livais-api
 sudo systemctl start livais-api

@@ -40,7 +40,7 @@ plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 
-app_directory = '/var/www/Livais-backend'
+app_directory = ENV.fetch('EC2_APP_DIR', '/var/www/Livais-backend')
 directory app_directory
 rackup "#{app_directory}/config.ru"
 environment 'production'

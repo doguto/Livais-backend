@@ -61,12 +61,12 @@ if Rails.env.development?
     cert_file.write(root_cert)
   end
 
-  ssl_bind "*********", "3000", {
+  ssl_bind "127.0.0.1", "3000", {
     key: key_file.to_path,
     cert: cert_file.to_path
   }
 elsif Rails.env.production?
-  app_directory = '/var/www/Livais-backend'
+  app_directory = ENV.fetch('EC2_APP_DIR', '/var/www/Livais-backend')
   directory app_directory
   rackup "#{app_directory}/config.ru"
   environment 'production'
