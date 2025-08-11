@@ -3,9 +3,10 @@ import { CfnOutput, SecretValue } from 'aws-cdk-lib'
 import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as rds from 'aws-cdk-lib/aws-rds';
-import * as acm from 'aws-cdk-lib/aws-certificatemanager';
 import { KeyPair } from "cdk-ec2-key-pair";
+import * as path from "node:path";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
+
 
 export class LivaisDevStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -13,7 +14,7 @@ export class LivaisDevStack extends cdk.Stack {
 
         // AvailabilityZone
         const appRegion = 'ap-northeast-1'
-        const availabilityZoneNames = [`${ appRegion }a`, `${ appRegion }c`]
+        const availabilityZoneNames = [`${appRegion}a`, `${appRegion}c`]
 
         // VPC
         // publicSubnet, privateSubnetを各AZに1つずつ作成
@@ -79,25 +80,15 @@ export class LivaisDevStack extends cdk.Stack {
         })
 
         // Route53
-        const domainName = process.env.DOMAIN_NAME as string
         const hostZone = HostedZone.fromLookup(this, 'DevServerZone', {
-            domainName: domainName,
+            domainName: process.env.DOMAIN_NAME as string,
         })
 
-        const devDomainPrefix = 'dev'
         new ARecord(this, "DevServerARecord", {
             target: RecordTarget.fromIpAddresses(devServerEip.ref),
             zone: hostZone,
-            recordName: devDomainPrefix,
+            recordName: "dev",
             region: appRegion,
-        })
-
-        // https用証明書の取得
-        const apiDomainName = `${ devDomainPrefix }.${ domainName }`
-        new acm.Certificate(this, "DevServerCertificate", {
-            domainName: apiDomainName,
-            certificateName: "DevServerCertificate",
-            validation: acm.CertificateValidation.fromDns(hostZone),
         })
 
         // RDS
