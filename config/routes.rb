@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "oauth#callback"
 
   scope path: "/api/v1" do
-    resources :posts, only: [:index, :show, :create] do
+    resources :posts, only: [:show, :create] do
       resources :replies, only: [:create], module: :posts
       resources :likes, only: [:create], module: :posts
       resources :reposts, only: [:create], module: :posts
