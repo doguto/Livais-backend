@@ -1,9 +1,4 @@
 class PostsController < ApplicationController
-  def index
-    dtos = Page::HomePage::TimelineDomain.new.execute
-    render json: dtos.map(&:get).as_json
-  end
-
   def show
     post = Common::Posts::ShowPostDomain.new.execute(post_id: params[:id])
     render json: post.get.as_json

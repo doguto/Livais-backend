@@ -47,7 +47,7 @@ class PostDto
       is_liked = post.current_user_likes.any?
       is_reposted = post.current_user_reposts.any?
 
-      PostDto.new(post, is_following_user: is_following_user, is_liked: is_liked, is_reposted: is_reposted).get
+      PostDto.new(post, is_following_user: is_following_user, is_liked: is_liked, is_reposted: is_reposted)
     end
   end
 end

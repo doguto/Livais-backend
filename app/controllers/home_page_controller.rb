@@ -7,6 +7,6 @@ class HomePageController < ApplicationController
            elsif request_object.tab.follow?
              Page::HomePage::FollowTimelineDomain.new.execute
            end
-    render json: dtos, status: :ok
+    render json: dtos.map(&:get), status: :ok
   end
 end
